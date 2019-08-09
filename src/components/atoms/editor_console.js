@@ -12,7 +12,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function console() {
+// changed from 'console', 'console' is a JS keyword
+export default function EditorConsole() {
   const classes = useStyles();
   return (
     <Paper className={classes.root}>
