@@ -1,6 +1,5 @@
 let debug = require('debug')('binate:server');
 let http = require('http');
-let createError = require('http-errors');
 let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
