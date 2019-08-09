@@ -4,17 +4,17 @@ import logo from './logo.svg';
 import './App.css';
 
 // Components
-import Editor from './components/Editor'
-import Login from './components/Login'
-import Dashboard from './components/Dashboard'
+import Editor from './components/pages/Editor'
+import Login from './components/pages/Login'
+import Dashboard from './components/pages/Dashboard'
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <Route path="/" component={Login} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/editor" component={Editor} />
+        <Route exact path="/" component={Login} />
+        <Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/editor" component={Editor} />
       </div>
     </Router>
     
