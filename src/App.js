@@ -4,19 +4,28 @@ import logo from './logo.svg';
 import './App.css';
 
 // Components
-import Editor from './components/pages/Editor'
+import Editor from './components/templates/Editor'
 import Login from './components/pages/Login'
 import Dashboard from './components/pages/Dashboard'
 
+// Material UI
+import { StylesProvider, createGenerateClassName } from '@material-ui/styles'
+
+const generateClassName = createGenerateClassName({
+  productionPrefix: 'c',
+})
+
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Route exact path="/" component={Login} />
-        <Route exact path="/dashboard" component={Dashboard} />
-        <Route exact path="/editor" component={Editor} />
-      </div>
-    </Router>
+    <StylesProvider generateClassName={generateClassName}>
+      <Router>
+        <div className="App">
+          <Route exact path="/" component={Login} />
+          <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/editor" component={Editor} />
+        </div>
+      </Router>
+    </StylesProvider>
     
   );
 }
