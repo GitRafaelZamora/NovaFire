@@ -8,6 +8,10 @@ import Editor from './components/templates/Editor'
 import Login from './components/pages/Login'
 import Dashboard from './components/pages/Dashboard'
 
+// Redux
+import { Provider } from 'react-redux'
+import store from './redux/store'
+
 // Material UI
 import { StylesProvider, createGenerateClassName } from '@material-ui/styles'
 
@@ -18,15 +22,16 @@ const generateClassName = createGenerateClassName({
 function App() {
   return (
     <StylesProvider generateClassName={generateClassName}>
-      <Router>
-        <div className="App">
-          <Route exact path="/" component={Login} />
-          <Route exact path="/dashboard" component={Dashboard} />
-          <Route exact path="/editor" component={Editor} />
-        </div>
-      </Router>
+      <Provider store={store}>
+        <Router>
+          <div className="App">
+            <Route exact path="/" component={Login} />
+            <Route exact path="/dashboard" component={Dashboard} />
+            <Route exact path="/editor" component={Editor} />
+          </div>
+        </Router>
+      </Provider>
     </StylesProvider>
-    
   );
 }
 

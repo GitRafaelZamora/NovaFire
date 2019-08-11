@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 // Material UI
 import { withStyles } from '@material-ui/core';
-// Test code stored in a file
-import testcode from '../../assets/testcode'
+
 // React Editor
 import { LiveProvider, LiveEditor } from 'react-live';
-import { w3cwebsocket as W3CWebSocket } from 'websocket';
+// Redux
+import { setCode, setHistory, setClient } from '../../redux/actions/dataActions'
+import { connect } from 'react-redux'
+import Proptypes from 'prop-types'
 
-const client = new W3CWebSocket('ws://127.0.0.1:8000');
 
 const styles = theme => ({
   /* Add Component Styles Here */
@@ -18,9 +19,7 @@ export class TextEditor extends Component {
     super(props);
     this.state = {
       currentUsers: [],
-      history: [],
       username: null,
-      code: testcode,
     }
   }
 
@@ -42,42 +41,20 @@ export class TextEditor extends Component {
     }
   }
 
-  componentWillMount() {
-    client.onopen = () => {
-      console.log('WebSocket Client Connected')
-    }
-
-    client.onmessage = (message) => {
-      const data = JSON.parse(message.data);
-      const newState = {};
-
-
-      if (data.type === "NEW_USER_EVENT") {
-        newState.currentUsers = Object.values(data.data.users)
-      } else if (data.type === "TEXT_CHANGE") {
-        newState.code = data.data.code;
-      }
-
-      newState.history = data.data.history;
-      this.setState({
-        ...newState
-      })
-    }
+  updateCode = (code) => {
+    this.props.setCode(code, this.state.username);
   }
 
-  updateCode = (e) => {
-    client.send(JSON.stringify({
-      type: "TEXT_CHANGE",
-      username: this.state.username,
-      code: e
-    }));
+  componentWillMount() {
+    this.props.setClient();
   }
 
   render() {
     const classes = this.props.classes
+    const { code } = this.props
     return (
       <>
-      <LiveProvider code={this.state.code}  contentEditable={true}>
+      <LiveProvider code={code}  contentEditable={true}>
         <LiveEditor name="code" onChange={this.updateCode} />
       </LiveProvider>
       <input name="username" ref={(input) => { this.username = input; }} />
@@ -88,4 +65,22 @@ export class TextEditor extends Component {
   }
 }
 
-export default withStyles(styles)(TextEditor);
+TextEditor.propTypes = {
+  setHistory: Proptypes.func.isRequired,
+  setCode: Proptypes.func.isRequired,
+  documentHistory: Proptypes.array.isRequired,
+  code: Proptypes.string.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  code: state.data.code,
+  documentHistory: state.data.documentHistory
+})
+
+const mapActionsToProps = {
+  setCode,
+  setHistory,
+  setClient
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(TextEditor));

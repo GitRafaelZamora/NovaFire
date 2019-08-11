@@ -11,7 +11,7 @@ const wsServer = new WebSocketServer({
 const clients = {};
 const users = {};
 let code = null;
-let history = [];
+let documentHistory = [];
 
 
 const broadcast = (json) => {
@@ -48,14 +48,14 @@ wsServer.on('request', (request) => {
       // New user connected
       if (data.type === TYPES.NEW_USER_EVENT) {
         users[uid] = data;
-        history.push(`${data.username} joined the document session.`);
-        json.data = { users, history };
+        documentHistory.push(`${data.username} joined the document session.`);
+        json.data = { users, documentHistory };
       } 
       // User updated text editor document
       else if (data.type === TYPES.TEXT_CHANGE) {
         console.log(data.code)
         code = data.code;
-        json.data = { code, history };
+        json.data = { code, documentHistory };
       }
 
       broadcast(JSON.stringify(json));
@@ -68,10 +68,15 @@ wsServer.on('request', (request) => {
   connection.on('close', (connection) => {
     console.log( ( new Date() ) + " Peer " + uid + " disconnected.");
     const json = { type: TYPES.USER_EVENT };
-    history.push(`${users[uid].username} left the document session.`)
-    json.data = { users, history };
-    delete clients[uid];
-    delete users[uid];
+    if (users[uid]) {
+      documentHistory.push(`${users[uid].username} left the document session.`)
+      json.data = { users, documentHistory };
+      delete clients[uid];
+      delete users[uid];
+    } else {
+      documentHistory.push(`${uid} left the document session.`)
+      delete clients[uid];
+    }
     broadcast(JSON.stringify(json));
   })
 })
