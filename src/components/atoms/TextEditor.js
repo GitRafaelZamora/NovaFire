@@ -14,14 +14,7 @@ import {
 } from 'react-live';
 
 const styles = theme => ({
-  document: {
-    color: 'yellow',
-    fontFamily: 'Inconsolata, monospace',
-    fontSize: '14px',
-    minHeight: '100%',
-    textAlign: 'left',
-    padding: '20px',
-  }
+  /* Add Component Styles Here */
 })
 
 export class TextEditor extends Component {
@@ -29,7 +22,7 @@ export class TextEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      code: '',
+      code: testcode,
     }
   }
 
@@ -40,15 +33,10 @@ export class TextEditor extends Component {
   }
 
   render() {
-    const { classes } = this.props
-
-    var syntax = testcode;
-
+    const classes = this.props.classes
     return (
-      <LiveProvider name="code" code={this.state.code} onChange={this.updateContent} contentEditable={true}>
+      <LiveProvider code={this.state.code} onChange={this.updateContent} contentEditable={true}>
         <LiveEditor />
-        <LiveError />
-        <LivePreview />
       </LiveProvider>
     )
   }
