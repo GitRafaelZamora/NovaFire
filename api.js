@@ -54,13 +54,20 @@ router.post('/createUser', (request, response) => {
     if (validateNewUser(request.body.user)) {
         firebase.createUser(request.body.user)
             .then(() => response.send)
-            .catch(() => badRequest(response));
-    } else badRequest(response)
+            .catch(() => response.status(400).send());
+    } else response.status(400).send();
 });
 
-function badRequest(response) {
-    response.status(400);
-    response.send();
-}
+router.post('/verifyLoginToken', (request, response) => {
+    firebase.verifyToken(request.body.token)
+        .then(uid => {
+            response.status(200).send({uid});
+        })
+        .catch(error => {
+            console.error(error);
+            response.status(400).send();
+        });
+});
+
 
 module.exports = router;
