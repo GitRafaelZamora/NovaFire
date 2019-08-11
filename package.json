@@ -38,10 +38,11 @@
     "typescript": "^3.5.3",
     "webpack": "^4.38.0",
     "webpack-cli": "^3.3.6",
-    "webpack-dev-server": "^3.7.2"
+    "webpack-dev-server": "^3.7.2",
+    "websocket": "^1.0.29"
   },
   "scripts": {
-    "dev": "concurrently 'npm:start' 'npm:webpack-bundle-dev' ",
+    "dev": "concurrently 'npm:start' 'npm:webpack-bundle-dev' 'node src/lib/editor-web-socket/socket.js' ",
     "start": "node server.js",
     "react-start": "react-scripts start",
     "webpack-build": "webpack",
