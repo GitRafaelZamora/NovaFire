@@ -10,6 +10,9 @@ import SideBar from '../organisms/SideBar'
 import TextEditor from '../atoms/TextEditor'
 import EditorConsole from '../atoms/editor_console'
 
+// Firebase
+import {auth} from "../../../lib/js/firebase/auth";
+
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -27,37 +30,38 @@ class Editor extends Component {
     super(props);
     this.state = {
       sessionID: null,
-      session: null
+      session: null,
+      user: null,
+      noUserFound: false,
+      noSession: false
     }
   }
 
   render() {
-    let page;
 
     if (this.isSessionIDProvided()) {
-      // show loading while fetching session info from server
-      if (!this.state.session) {
-        this.getEditorSession();
-        // TODO (Rafael): create atom/component for loading
-        page = <div><p>loading ...</p></div>
+      if (this.state.noSession) {
+        return (<Redirect to={"/error"}/>);
       }
-      else {
-        //  get current user logged in
-        //  if no user, require log in
-        let user = this.getCurrentUserLoggedIn();
-        //  confirm user is expected in the session
-        if (this.userIsAllowedInSession(user)) {
-          //  render editor
-          page = Editor.UIELement();
-        }
+      if (this.state.noUserFound) {
+        return (
+            <Redirect to={{
+              pathname: '/login',
+              state: {
+                destination: 'editor/' + this.getSessionID()
+              }
+            }}/>);
       }
+      if (this.state.user && this.state.session && this.userIsAllowedInSession()) {
+        return (Editor.UIELement());
+      }
+      // show loading while fetching session info from server and user
+      this.getEditorSession();
+      this.getCurrentUserLoggedIn();
+      return (<div><p>loading ...</p></div>);
     }
-    else {
-      //  redirect to home page || 404 page
-      page = <Redirect to={"/error"}/>
-    }
-
-    return page;
+    //  redirect to home page || 404 page
+    return (<Redirect to={"/error"}/>);
   }
 
   static UIELement() {
@@ -84,12 +88,12 @@ class Editor extends Component {
     return this.props.match.params["sessionid"];
   }
 
-  userIsAllowedInSession(user) {
+  userIsAllowedInSession() {
     if (!this.state.session) {
       console.error('Session is not available');
       return false;
     }
-    return this.state.session.users.includes(user.id);
+    return this.state.session.users.includes(this.state.user.uid);
   }
 
   getEditorSession() {
@@ -101,15 +105,23 @@ class Editor extends Component {
         'Content-Type': 'application/json'
       }
     })
-        .then(response => response.json())
-        //TODO: should redirect to 404 page if session is not available
+        .then(response => {
+          if (response.status !== 200) {
+            this.setState({noSession: true})
+          }
+          return response.json();
+        })
         .then(result => this.setState({session: result}))
         .catch(console.error)
   }
 
   getCurrentUserLoggedIn() {
-    //  TODO: use Firebase Auth
-    return {id: 1};
+    auth().then(user => {
+      this.setState({user: user})
+    })
+        .catch(() => {
+          this.setState({noUserFound: true})
+        })
   }
 }
 
