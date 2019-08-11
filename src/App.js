@@ -20,8 +20,8 @@ function App() {
     <StylesProvider generateClassName={generateClassName}>
       <Router>
         <div className="App">
-          <Route exact path="/" component={Login} />
-          <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/" component={Dashboard} />
           <Route exact path="/editor/:sessionid" component={Editor} />
           <Route path={["", "/error"]} component={Error} />
         </div>
