@@ -26,6 +26,16 @@ class Firebase {
                 });
         })
     }
+
+    verifyToken(token) {
+        return new Promise((resolve, reject) => {
+            admin.auth().verifyIdToken(token)
+                .then(function(decodedToken) {
+                    let uid = decodedToken.uid;
+                    resolve(uid);
+                }).catch(reject);
+        })
+    }
 }
 
 module.exports = new Firebase();
