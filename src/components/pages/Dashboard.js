@@ -1,6 +1,21 @@
 import React, { Component } from 'react'
+
+// Firebase
 import {auth} from "../../../lib/js/firebase/auth";
+import {logout} from "../../../lib/js/firebase/logout";
+
 import {Redirect} from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+    button: {
+        margin: theme.spacing(1),
+    },
+    input: {
+        display: 'none',
+    },
+}));
 
 export class Dashboard extends Component {
     constructor(props) {
@@ -20,31 +35,49 @@ export class Dashboard extends Component {
             })
     }
 
+    handleLogout() {
+        logout().then(() => {
+            window.location = '/';
+        });
+    }
+
     render() {
-        let page;
+        const {classes} = this.props;
 
+        // no user logged in
         if (this.state.noUserFound) {
-            page = <Redirect to={{
-                pathname: '/login',
-                state: {
-                    destination: 'dashboard'
-                }
-            }}/>;
-        }
-         else {
-            if (!this.state.user) {
-                page = <div>Loading ...</div>;
-                this.getUser();
-            }
-            else {
-                page = <div>
-                    Hello from dashboard
-                </div>
-            }
+            return (
+                <Redirect to={{
+                    pathname: '/login',
+                    state: {
+                        destination: 'dashboard'
+                    }
+                }}/>
+            );
         }
 
-        return page;
+        // user logged in
+        if (this.state.user) {
+            return (
+                <div>
+                    Hello from dashboard
+                    <Button
+                        variant="contained"
+                        className={classes.button}
+                        color={'secondary'}
+                        onClick={this.handleLogout}
+                        // href={'/'}
+                    >
+                        Log Out
+                    </Button>
+                </div>
+            )
+        }
+
+        // try to get currently logged in user
+        this.getUser();
+        return (<div>Loading ...</div>);
     }
 }
 
-export default Dashboard
+export default withStyles(useStyles)(Dashboard);
