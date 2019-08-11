@@ -1,12 +1,12 @@
 import React from 'react';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
-import logo from './logo.svg';
 import './App.css';
 
 // Components
 import Editor from './components/templates/Editor'
 import Login from './components/pages/Login'
 import Dashboard from './components/pages/Dashboard'
+import Navbar from './components/organisms/Navbar'
 
 // Redux
 import { Provider } from 'react-redux'
@@ -17,6 +17,7 @@ import { StylesProvider, createGenerateClassName } from '@material-ui/styles'
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'c',
+  backgroundColor: '#282c34'
 })
 
 function App() {
@@ -24,7 +25,8 @@ function App() {
     <StylesProvider generateClassName={generateClassName}>
       <Provider store={store}>
         <Router>
-          <div className="App">
+          <Navbar />
+          <div className="container">
             <Route exact path="/" component={Login} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/editor" component={Editor} />
