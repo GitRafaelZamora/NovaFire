@@ -1,7 +1,11 @@
+// TODO: could use preexisting server
+// import server from '../../../server';
+
 const WebSocketServer = require('websocket').server;
 const http = require('http');
 
 // Spinning the http server and the websocket server.
+// Comment out to use preexisting server
 const server = http.createServer().listen(8000);
 
 const wsServer = new WebSocketServer({

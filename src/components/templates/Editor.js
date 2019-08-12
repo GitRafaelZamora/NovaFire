@@ -53,6 +53,7 @@ class Editor extends Component {
             }}/>);
       }
       if (this.state.user && this.state.session && this.userIsAllowedInSession()) {
+        // send session info to socket and create socket client for user in TextEditor
         return (Editor.UIELement());
       }
       // show loading while fetching session info from server and user

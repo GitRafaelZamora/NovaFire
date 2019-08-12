@@ -51,6 +51,7 @@
   },
   "scripts": {
     "dev": "concurrently 'npm:start' 'npm:webpack-bundle-dev' 'node src/lib/editor-web-socket/socket.js' ",
+    "dev-one-server": "concurrently 'npm:start' 'npm:webpack-bundle-dev' ",
     "start": "node server.js",
     "react-start": "react-scripts start",
     "webpack-build": "webpack",

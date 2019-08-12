@@ -12,7 +12,7 @@ import Proptypes from 'prop-types'
 
 const styles = theme => ({
   /* Add Component Styles Here */
-})
+});
 
 export class TextEditor extends Component {
   constructor(props) {
@@ -39,19 +39,19 @@ export class TextEditor extends Component {
         }));
       });
     }
-  }
+  };
 
   updateCode = (code) => {
     this.props.setCode(code, this.state.username);
-  }
+  };
 
   componentWillMount() {
     this.props.setClient();
   }
 
   render() {
-    const classes = this.props.classes
-    const { code } = this.props
+    const classes = this.props.classes;
+    const { code } = this.props;
     return (
       <>
       <LiveProvider code={code}  contentEditable={true}>
@@ -70,17 +70,17 @@ TextEditor.propTypes = {
   setCode: Proptypes.func.isRequired,
   documentHistory: Proptypes.array.isRequired,
   code: Proptypes.string.isRequired
-}
+};
 
 const mapStateToProps = (state) => ({
   code: state.data.code,
   documentHistory: state.data.documentHistory
-})
+});
 
 const mapActionsToProps = {
   setCode,
   setHistory,
   setClient
-}
+};
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(TextEditor));

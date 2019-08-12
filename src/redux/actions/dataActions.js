@@ -2,13 +2,18 @@ import { SET_HISTORY, SET_CODE, SET_CLIENT, ON_MESSAGE } from '../types';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
 const client = new W3CWebSocket('ws://127.0.0.1:8000');
+// Uncomment to use preexisting server
+// const client = new W3CWebSocket('ws://localhost:5000/');
 
+export const createClient = () => (dispatch) => {
+  return new W3CWebSocket();
+};
 
 export const setClient = () => (dispatch) => {
 
   client.onopen = () => {
     console.log('WebSocket Client Connected')
-  }
+  };
 
   client.onmessage = (message) => {
     const data = JSON.parse(message.data);
@@ -25,13 +30,13 @@ export const setClient = () => (dispatch) => {
       type: ON_MESSAGE,
       payload: newState
     })
-  }
+  };
 
   dispatch({
     type: SET_CLIENT,
     payload: client
   })
-}
+};
 
 export const setCode = (code, user) => (dispatch) => {
   dispatch({ 
@@ -44,11 +49,11 @@ export const setCode = (code, user) => (dispatch) => {
     code: code
   }));
   
-}
+};
 
 export const setHistory = (documentHistory) => (dispatch) => {
   dispatch({ 
     type: SET_HISTORY, 
     payload: documentHistory
   });
-}
+};
