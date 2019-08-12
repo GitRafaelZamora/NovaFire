@@ -54,7 +54,7 @@ class Editor extends Component {
       }
       if (this.state.user && this.state.session && this.userIsAllowedInSession()) {
         // send session info to socket and create socket client for user in TextEditor
-        return (Editor.UIELement());
+        return (this.UIELement());
       }
       // show loading while fetching session info from server and user
       this.getEditorSession();
@@ -65,11 +65,11 @@ class Editor extends Component {
     return (<Redirect to={"/error"}/>);
   }
 
-  static UIELement() {
+  UIELement() {
     return (
       <Grid container>
         <Grid item xs={8} sm={6} md={8}>
-          <TextEditor />
+          <TextEditor session={this.state.session} user={this.state.user}/>
         </Grid>
         <Grid item xs={4} sm={6} md={4}>
           <SideBar />

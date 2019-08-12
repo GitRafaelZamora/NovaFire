@@ -18,36 +18,14 @@ export class TextEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUsers: [],
-      username: null,
+      wsClient: this.props.setClient(this.props.session),
+      user: this.props.user
     }
   }
-
-  login = () => {
-    const username = this.username.value;
-
-    if (username.trim()) {
-      const data = {
-        username
-      };
-      this.setState({
-        ...data
-      }, () => {
-        client.send(JSON.stringify({
-          ...data, 
-          type: "NEW_USER_EVENT"
-        }));
-      });
-    }
-  };
 
   updateCode = (code) => {
-    this.props.setCode(code, this.state.username);
+    this.props.setCode(this.state.wsClient, code, this.state.user.email);
   };
-
-  componentWillMount() {
-    this.props.setClient();
-  }
 
   render() {
     const classes = this.props.classes;
@@ -57,8 +35,6 @@ export class TextEditor extends Component {
       <LiveProvider code={code}  contentEditable={true}>
         <LiveEditor name="code" onChange={this.updateCode} />
       </LiveProvider>
-      <input name="username" ref={(input) => { this.username = input; }} />
-      <button type="button" onClick={this.login}>Join</button>
       </>
       
     )

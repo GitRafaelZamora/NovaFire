@@ -1,20 +1,24 @@
-import { SET_HISTORY, SET_CODE, SET_CLIENT, ON_MESSAGE } from '../types';
+import { SET_HISTORY, SET_CODE, SET_CLIENT, ON_MESSAGE, SET_SESSION } from '../types';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
-const client = new W3CWebSocket('ws://127.0.0.1:8000');
-// Uncomment to use preexisting server
-// const client = new W3CWebSocket('ws://localhost:5000/');
-
-export const createClient = () => (dispatch) => {
-  return new W3CWebSocket();
-};
-
-export const setClient = () => (dispatch) => {
+export const setClient = (session) => (dispatch) => {
+  const client = new W3CWebSocket('ws://127.0.0.1:8000');
+  // Uncomment to use preexisting server
+  // const client = new W3CWebSocket('ws://localhost:5000/');
 
   client.onopen = () => {
-    console.log('WebSocket Client Connected')
+    console.log('WebSocket Client Connected');
+    dispatch({
+      type: ON_MESSAGE,
+      payload: session
+    });
+    client.send(JSON.stringify({
+      type: SET_SESSION,
+      session: session
+    }))
   };
 
+  // on message received from websocket server
   client.onmessage = (message) => {
     const data = JSON.parse(message.data);
     const newState = {};
@@ -29,31 +33,34 @@ export const setClient = () => (dispatch) => {
     dispatch({
       type: ON_MESSAGE,
       payload: newState
-    })
+    });
+
+    dispatch({
+      type: SET_CLIENT,
+      payload: client
+    });
+
   };
 
-  dispatch({
-    type: SET_CLIENT,
-    payload: client
-  })
+  return client;
 };
 
-export const setCode = (code, user) => (dispatch) => {
-  dispatch({ 
-    type: SET_CODE, 
-    payload: code 
-  });
-  client.send(JSON.stringify({
-    type: "TEXT_CHANGE",
-    username: user,
-    code: code
-  }));
-  
-};
+export const setCode = (client, code, user) => (dispatch) => {
+    dispatch({
+      type: SET_CODE,
+      payload: code
+    });
+    client.send(JSON.stringify({
+      type: "TEXT_CHANGE",
+      username: user,
+      code: code
+    }));
 
-export const setHistory = (documentHistory) => (dispatch) => {
-  dispatch({ 
-    type: SET_HISTORY, 
-    payload: documentHistory
-  });
-};
+  };
+
+  export const setHistory = (documentHistory) => (dispatch) => {
+    dispatch({
+      type: SET_HISTORY,
+      payload: documentHistory
+    });
+  };
