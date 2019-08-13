@@ -1,0 +1,77 @@
+{
+  "name": "binate",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "@material-ui/core": "^4.3.1",
+    "@material-ui/styles": "^4.3.0",
+    "babel-loader": "^8.0.6",
+    "babel-polyfill": "^6.26.0",
+    "body-parser": "latest",
+    "clean-webpack-plugin": "^3.0.0",
+    "concurrently": "^4.1.1",
+    "cookie-parser": "~1.4.4",
+    "create-react-app": "^3.0.1",
+    "css-loader": "^3.1.0",
+    "debug": "~2.6.9",
+    "dotenv": "^8.0.0",
+    "express": "~4.16.1",
+    "html-webpack-plugin": "^3.2.0",
+    "http-errors": "~1.6.3",
+    "materialize-css": "^1.0.0",
+    "morgan": "~1.9.1",
+    "plaid": "^3.1.1",
+    "prismjs": "^1.17.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-helmet": "^5.2.1",
+    "react-identicons": "^1.1.7",
+    "react-live": "^2.1.2",
+    "react-materialize": "^3.3.3",
+    "react-promise": "^3.0.2",
+    "react-redux": "^7.1.0",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "3.0.1",
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0",
+    "style-loader": "^0.23.1",
+    "svg-inline-loader": "^0.8.0",
+    "typescript": "^3.5.3",
+    "webpack": "^4.38.0",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.7.2",
+    "websocket": "^1.0.29"
+  },
+  "scripts": {
+    "dev": "concurrently 'npm:start' 'npm:webpack-bundle-dev' 'node ./src/lib/editor-web-socket/socket.js' ",
+    "start": "node ../Server/server.js",
+    "react-start": "react-scripts start",
+    "webpack-build": "webpack",
+    "webpack-bundle": "webpack --config Client/webpack.config.js",
+    "webpack-bundle-dev": "webpack-dev-server --mode development --devtool inline-source-map --hot",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "^6.1.0"
+  }
+}
