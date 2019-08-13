@@ -1,5 +1,5 @@
 {
-  "name": "binate",
+  "name": "binate-server",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -23,5 +23,9 @@
   },
   "devDependencies": {
     "firebase-admin": "^8.3.0"
-  }
+  },
+  "main": "server.js",
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
