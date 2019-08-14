@@ -11,61 +11,74 @@ router.get('/', (request, response) => {
 });
 
 router.post('/session', (request, response) => {
+    let result = {};
+
     if (!request.body.sessionID) {
-        response.status(400);
-        response.send();
-    } else {
-        let databasePath = path.join(__dirname, '/database/sessions.json');
-        let sessionID = request.body.sessionID;
-        jsonfile.readFile(databasePath)
-            .then(sessions =>{
-                let session = sessions.find(sesh => sesh.id === parseInt(sessionID));
-                session ? response.status(200) : response.status(400);
-                response.send(session);
-            })
-            .catch(error => {
-                console.error(error);
-                response.status(400);
-                response.send()
-            })
+        result.error = "Provide session id! {sessionid: 'id' [String]}";
+        return response.status(400).send(result);
     }
+
+    //TODO: connect to firebase database
+    let databasePath = path.join(__dirname, '/database/sessions.json');
+    let sessionid = request.body.sessionid.toString();
+    jsonfile.readFile(databasePath)
+        .then(sessions =>{
+            let session = sessions.find(session => session.id === sessionid);
+            if (!session) {
+                result.error = "Session ID provided is not valid";
+                response.status(400).send(result);
+            }
+            result.session = session;
+            response.status(200).send(result);
+        })
+        .catch(error => {
+            console.error(error);
+            result.error = "Internal Server Error: " + error;
+            response.status(400).send(result);
+        })
 });
 
 router.post('/createUser', (request, response) => {
     function validateNewUser(user) {
         if (!user) return user;
-    /*
-        {
-            email: 'user@example.com',
-            emailVerified: false,
-            phoneNumber: '+11234567890',
-            password: 'secretPassword',
-            displayName: 'John Doe',
-            photoURL: 'http://www.example.com/12345678/photo.png',
-            disabled: false
-        }
-     */
-    return user.hasOwnProperty('email') &&
-        user.hasOwnProperty('password') &&
-        user.hasOwnProperty('emailVerified') &&
-        user.hasOwnProperty('displayName')
+        return user.hasOwnProperty('email') &&
+            user.hasOwnProperty('password') &&
+            user.hasOwnProperty('emailVerified') &&
+            user.hasOwnProperty('displayName')
     }
 
-    if (validateNewUser(request.body.user)) {
-        firebase.createUser(request.body.user)
-            .then(() => response.send)
-            .catch(() => response.status(400).send());
-    } else response.status(400).send();
+    let result = {};
+
+    if (!request.body.user) {
+        result.error = "Provide user! {user: {} [Object]}";
+        return response.status(400).send(result);
+    }
+    if (!validateNewUser(request.body.user)) {
+        result.error = "Provided user is missing one of the following parameters: email, password, emailVerified, displayName";
+        return response.status(400).send(result);
+    }
+
+    firebase.createUser(request.body.user)
+        .then(() => {
+            result.message = `Successfully created user: ${request.body.user.displayName}`;
+            response.send(result)
+        })
+        .catch(error => response.status(400).send({error}));
 });
 
 router.post('/verifyLoginToken', (request, response) => {
+    let result = {};
+
+    if (!request.body.token) {
+        result.error = "Provide token! {token: 'token' [String]}";
+        return response.status(400).send(result);
+    }
+
     firebase.verifyToken(request.body.token)
-        .then(uid => {
-            response.status(200).send({uid});
-        })
+        .then(uid => response.status(200).send({uid}))
         .catch(error => {
             console.error(error);
-            response.status(400).send();
+            response.status(400).send(error);
         });
 });
 
