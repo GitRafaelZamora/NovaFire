@@ -3,7 +3,11 @@ module.exports = class Chat {
         io.on('connection', socket => {
 
             socket.on('new message', data => {
-                socket.broadcast.to(data.room).emit('new message', data.message)
+                let response = {
+                    message: data.message,
+                    sender: data.sender
+                };
+                socket.broadcast.to(data.room).emit('new message', response)
             });
 
             socket.on('join room', room => {
