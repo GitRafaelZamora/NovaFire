@@ -3,6 +3,7 @@ let http = require('http');
 require('dotenv').config();
 const app = require('./app');
 const Socket = require('./socket');
+const Chat = require('./chat');
 
 /**
  * Create HTTP server.
@@ -17,6 +18,12 @@ let port = normalizePort(process.env.PORT || '5000');
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+/**
+ * Create socket.io connection for chat
+ */
+const io = require('socket.io')(server);
+new Chat().createConnection(io);
 
 /**
  * Connect to websocket
