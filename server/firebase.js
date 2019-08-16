@@ -8,7 +8,7 @@ class Firebase {
     constructor() {
         admin.initializeApp({
             credential: admin.credential.cert(serviceAccount),
-            databaseURL: "https://binate-363ac.firebaseio.com"
+            databaseURL: "https://binate-d936a.firebaseio.com"
         });
     }
 

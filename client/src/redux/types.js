@@ -1,6 +1,20 @@
-// Data Reducers Types
 export const SET_CODE = 'SET_CODE';
 export const SET_HISTORY = 'SET_HISTORY';
 export const SET_SESSION = 'SET_SESSION';
 export const SET_CLIENT = 'SET_CLIENT';
 export const ON_MESSAGE = 'ON_MESSAGE';
+export const SET_USER = 'SET_USER';
+export const LOADING_USER = 'LOADING_USER';
+export const SET_UNAUTHENTICATED = 'SET_UNAUTHENTICATED';
+export const SET_AUTHENTICATED = 'SET_AUTHENTICATED';
+
+export const SET_DOCUMENT_ID = 'SET_DOCUMENT_ID';
+export const ADD_DOCUMENT_USER = 'ADD_DOCUMENT_USER';
+export const REMOVE_DOCUMENT_USER = 'REMOVE_DOCUMENT_USER';
+export const SET_DOCUMENT = 'SET_DOCUMENT';
+export const LOADING_DOCUMENT = 'LOADING_DOCUMENT';
+
+export const SET_ERRORS = 'SET_ERRORS';
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+export const LOADING_UI = 'LOADING_UI';
+export const STOP_LOADING_UI = 'STOP_LOADING_UI';

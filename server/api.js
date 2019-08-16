@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const jsonfile = require('jsonfile');
 const path = require('path');
+
 const firebase = require('./firebase');
 
 router.get('/', (request, response) => {
@@ -15,6 +16,7 @@ router.post('/session', (request, response) => {
         response.status(400);
         response.send();
     } else {
+        // console.log("__dirname");
         let databasePath = path.join(__dirname, '/database/sessions.json');
         let sessionID = request.body.sessionID;
         jsonfile.readFile(databasePath)

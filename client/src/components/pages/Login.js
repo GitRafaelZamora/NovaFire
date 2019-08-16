@@ -1,149 +1,146 @@
 import React, {Component} from 'react';
-import Avatar from '@material-ui/core/Avatar';
+import {Redirect} from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+// Material UI
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import {login} from '../../../lib/js/firebase/login';
-import {auth} from '../../../lib/js/firebase/auth';
-import {Redirect} from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
 
-// const useStyles = makeStyles(theme => ({
-const useStyles = makeStyles(theme => ({
-    '@global': {
-        body: {
-            backgroundColor: theme.palette.common.white,
-        },
-    },
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
-    },
+// Redux
+import { connect } from 'react-redux'
+import { loginUser } from "../../redux/actions/userActions";
+
+const styles = {
     form: {
-        width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(1),
+        textAlign: 'center',
+        paddingTop: '50px'
     },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
+    input: {
+        color: 'white'
     },
-}));
+    image: {
+        margin: '20px auto 20px auto',
+        maxWidth: 100,
+    },
+    pageTitle: {
+        margin: '10px auto 10px auto',
+        fontSize: 50,
+    },
+    textField: {
+        margin: '10px auto 10px auto',
+        color: '#fff'
+    },
+    button: {
+        marginTop: 20,
+        position: 'relative'
+    },
+    customError: {
+        color: 'red',
+        fontSize: '0.8rem',
+        marginTop: '10px'
+    },
+    progress: {
+        position: 'absolute'
+    }
+};
 
 class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            redirect: null,
+            email: '',
+            password: '',
+            errors: {}
         };
-
-        this.handleLogin = this.handleLogin.bind(this);
-        this.handleLoggedInUser = this.handleLoggedInUser.bind(this);
     }
 
-    handleLogin(e) {
+    handleSubmit(e) {
         e.preventDefault();
-        let email = document.querySelector('input[name="email"]').value;
-        let password = document.querySelector('input[name="password"]').value;
-        let destination = this.props.location.state.destination;
-        login(email, password)
-            .then(() => {
-                this.setState({redirect: destination});
-            })
-            .catch(errorCode => {
-            //    TODO: show error in snackbar
-            });
-    }
-
-    handleLoggedInUser() {
-        auth().then(() => {
-            this.setState({redirect: this.props.location.state.destination})
-        })
+        const user = {
+            email: this.state.email,
+            password: this.state.password,
+        };
+        // Make request to server for credentials.
+        this.props.loginUser(user, this.props.history);
     }
 
     render() {
-        const {classes} = this.props;
+        const { classes } = this.props;
 
         if (this.state.redirect) {
             return <Redirect to={'/' + this.state.redirect}/>;
         }
 
-        this.handleLoggedInUser();
         return (
-            <Container component="main" maxWidth="xs">
-                <CssBaseline />
-                <div className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Sign in
+            <Grid container className={classes.form}>
+                <Grid item sm />
+                <Grid item sm>
+                    <Typography variant="h1" className={classes.pageTitle}>
+                        Login
                     </Typography>
-                    <form className={classes.form} noValidate>
+                    <form noValidate onSubmit={this.handleSubmit}>
                         <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
                             id="email"
-                            label="Email Address"
                             name="email"
-                            autoComplete="email"
-                            autoFocus
+                            type="email"
+                            label="Email"
+                            InputProps={{ className: classes.input }}
+                            // helperText={errors.email}
+                            // error={errors.email ? true : false}
+                            value={this.state.email}
+                            onChange={this.handleChange}
+                            fullWidth
                         />
                         <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
                             id="password"
-                            autoComplete="current-password"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        />
-                        <Button
-                            type="submit"
+                            name="password"
+                            type="password"
+                            label="Password"
+                            InputProps={{ className: classes.input }}
+                            // helperText={errors.password}
+                            // error={errors.password ? true : false}
+                            value={this.state.password}
+                            onChange={this.handleChange}
                             fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                            onClick={this.handleLogin}
-                        >
-                            Sign In
+                        />
+                        {/*{errors.general && (*/}
+                        {/*    <Typography variant="body2" className={classes.customError}>*/}
+                        {/*        {errors.general}*/}
+                        {/*    </Typography>*/}
+                        {/*)}*/}
+                        <Button type="submit" variant="contained" color="primary" className={classes.button} >
+                            Login
+                            {/*{ loading &&*/}
+                            {/*<CircularProgress size={30} className={classes.progress} />*/}
+                            {/*}*/}
                         </Button>
-                        <Grid container>
-                            <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
-                            </Grid>
-                            <Grid item>
-                                <Link href="#" variant="body2">
-                                    {"Don't have an account? Sign Up"}
-                                </Link>
-                            </Grid>
-                        </Grid>
+                        <br />
+                        <small>don't have an accound ? sign up <Link to="/signup">here</Link></small>
                     </form>
-                </div>
-            </Container>
+                </Grid>
+                <Grid item sm />
+            </Grid>
         );
     }
 }
 
-export default withStyles(useStyles)(Login)
+Login.propTypes = {
+    classes: PropTypes.object.isRequired,
+    loginUser: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+    user: state.user,
+    UI: state.UI,
+});
+
+const mapActionsToProps = {
+  loginUser
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(Login));

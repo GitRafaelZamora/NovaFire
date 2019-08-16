@@ -1,20 +1,15 @@
 import React, { Component } from 'react'
 
-// Firebase
-import {auth} from "../../../lib/js/firebase/auth";
-import {logout} from "../../../lib/js/firebase/logout";
-
-import {Redirect} from 'react-router-dom';
-import Button from '@material-ui/core/Button';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
+import Grid from "@material-ui/core/Grid";
+import Icon from "@material-ui/core/Icon";
+
+// Components
+import DocumentCard from "../atoms/DocumentCard";
+import AddDocumentCard from "../atoms/AddDocumentCard"
 
 const useStyles = makeStyles(theme => ({
-    button: {
-        margin: theme.spacing(1),
-    },
-    input: {
-        display: 'none',
-    },
+    // Insert Styles here.
 }));
 
 export class Dashboard extends Component {
@@ -22,61 +17,41 @@ export class Dashboard extends Component {
         super(props);
         this.state = {
             user: null,
-            noUserFound: false
+            documents: [
+                {
+                    id: "doc123",
+                    users: ["rafa", "david"],
+                    challenge: "Add W/O Arithmetic Operators"
+                },
+                {
+                    id: "doc124",
+                    users: ["rafa", "david", "vivian"],
+                    challenge: "Add W/O Arithmetic Operators"
+                },
+                {
+                    id: "doc125",
+                    users: ["rafa"],
+                    challenge: "Add W/O Arithmetic Operators"
+                },
+            ],
         }
-    }
-
-    getUser() {
-        auth().then(user => {
-            this.setState({user: user})
-        })
-            .catch(() => {
-                this.setState({noUserFound: true})
-            })
-    }
-
-    handleLogout() {
-        logout().then(() => {
-            window.location = '/';
-        });
     }
 
     render() {
-        const {classes} = this.props;
-
-        // no user logged in
-        if (this.state.noUserFound) {
-            return (
-                <Redirect to={{
-                    pathname: '/login',
-                    state: {
-                        destination: 'dashboard'
-                    }
-                }}/>
-            );
-        }
-
-        // user logged in
-        if (this.state.user) {
-            return (
-                <div>
-                    Hello from dashboard
-                    <Button
-                        variant="contained"
-                        className={classes.button}
-                        color={'secondary'}
-                        onClick={this.handleLogout}
-                        // href={'/'}
-                    >
-                        Log Out
-                    </Button>
-                </div>
-            )
-        }
-
-        // try to get currently logged in user
-        this.getUser();
-        return (<div>Loading ...</div>);
+        return (
+            <Grid container spacing={2}>
+                <Grid item>
+                    <AddDocumentCard />
+                </Grid>
+                {this.state.documents.map(doc => {
+                    return (
+                        <Grid item key={doc.id}>
+                            <DocumentCard docID={doc.id} users={doc.users} challenge={doc.challenge}/>
+                        </Grid>
+                        )
+                })}
+            </Grid>
+        )
     }
 }
 
