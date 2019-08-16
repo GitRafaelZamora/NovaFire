@@ -9,6 +9,7 @@ import {
 const initialState = {
     documentID: null,
     document: null,
+    documents: [],
     users: [],
     loading: false,
 };

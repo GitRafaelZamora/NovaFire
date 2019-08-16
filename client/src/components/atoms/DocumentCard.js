@@ -7,6 +7,11 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 
+// Redux
+import { connect } from 'react-redux';
+import { getDocument } from "../../redux/actions/documentActions";
+import CreateDocumentCard from "./CreateDocumentCard";
+
 const useStyles = makeStyles({
     card: {
         minWidth: 275,
@@ -24,9 +29,13 @@ const useStyles = makeStyles({
     },
 });
 
-export default function DocumentCard(props) {
+function DocumentCard(props) {
     const classes = useStyles();
-    const bull = <span className={classes.bullet}>•</span>;
+
+    function openDocument() {
+        console.log("Opening document: " + props.docID);
+        props.getDocument(props.docID);
+    }
 
     return (
         <Card className={classes.card}>
@@ -41,13 +50,11 @@ export default function DocumentCard(props) {
                     {props.users}
                 </Typography>
                 <Typography variant="body2" component="p">
-                    well meaning and kindly.
-                    <br />
-                    {'"a benevolent smile"'}
+                    {props.challenge}
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small">Open Document</Button>
+                <Button onClick={openDocument}>Open Document</Button>
             </CardActions>
         </Card>
     );
@@ -56,3 +63,13 @@ export default function DocumentCard(props) {
 DocumentCard.propTypes = {
     docID: PropTypes.string.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+    documents: state.documents,
+});
+
+const mapActionsToProps = {
+  getDocument
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(DocumentCard);

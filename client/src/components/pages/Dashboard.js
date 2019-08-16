@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
-import Icon from "@material-ui/core/Icon";
 
 // Components
 import DocumentCard from "../atoms/DocumentCard";
@@ -34,14 +33,15 @@ export class Dashboard extends Component {
                     challenge: "Add W/O Arithmetic Operators"
                 },
                 {
-                    id: "doc125",
+                    id: "doc126",
                     users: ["rafa"],
                     challenge: "Add W/O Arithmetic Operators"
                 },
                 {
-                    id: "doc125",
+                    id: "doc127",
                     users: ["rafa"],
-                    challenge: "Add W/O Arithmetic Operators"
+                    challenge: "Add W/O Arithmetic Operators",
+                    text: "for (let i = 0; i < 12; i++) { ..."
                 },
             ],
         }
@@ -58,7 +58,7 @@ export class Dashboard extends Component {
                         <Grid item key={doc.id}>
                             <DocumentCard docID={doc.id} users={doc.users} challenge={doc.challenge}/>
                         </Grid>
-                        )
+                    )
                 })}
             </Grid>
         )

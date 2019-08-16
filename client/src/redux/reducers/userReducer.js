@@ -24,15 +24,14 @@ export default function( state = initialState, action) {
             return {
                 ...state,
                 loading: true,
-                authenticated: true
+                authenticated: true,
+                credentials: action.payload,
             };
-
         case LOADING_USER:
             return {
                 ...state,
                 loading: true,
             };
-
         default:
             return state;
     }

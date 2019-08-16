@@ -4,10 +4,10 @@ import {
 } from "../types";
 import axios from 'axios';
 
-export const getDocument = () => (dispatch) => {
+export const getDocument = (docID) => (dispatch) => {
     // Set UI state to loading document.
     dispatch({ type: LOADING_DOCUMENT });
-    axios.post('api/document')
+    axios.post('api/document', docID)
         .then((res) => {
             dispatch({
                 type: SET_DOCUMENT,
