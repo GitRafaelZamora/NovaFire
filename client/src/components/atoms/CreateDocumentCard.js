@@ -5,11 +5,13 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import AddBox from '@material-ui/icons/AddBox';
 import PropTypes from 'prop-types';
 
 const useStyles = makeStyles({
     card: {
         minWidth: 275,
+        minHeight: 210,
     },
     bullet: {
         display: 'inline-block',
@@ -22,17 +24,23 @@ const useStyles = makeStyles({
     pos: {
         marginBottom: 12,
     },
+    addContainer: {
+        textAlign: 'center'
+    },
+    add: {
+        fontSize: '100px',
+        color: 'blue'
+    }
 });
 
-export default function DocumentCard(props) {
+export default function CreateDocumentCard(props) {
     const classes = useStyles();
-    const bull = <span className={classes.bullet}>•</span>;
 
     return (
         <Card className={classes.card}>
             <CardContent>
                 <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    Created by: Rafael
+                    Create New Document
                 </Typography>
                 <Typography variant="h5" component="h2">
                     {props.docID}
@@ -40,19 +48,10 @@ export default function DocumentCard(props) {
                 <Typography className={classes.pos} color="textSecondary">
                     {props.users}
                 </Typography>
-                <Typography variant="body2" component="p">
-                    well meaning and kindly.
-                    <br />
-                    {'"a benevolent smile"'}
+                <Typography className={classes.addContainer} variant="body2" component="p">
+                    <AddBox className={classes.add} fontSize={"large"} />
                 </Typography>
             </CardContent>
-            <CardActions>
-                <Button size="small">Open Document</Button>
-            </CardActions>
         </Card>
     );
 }
-
-DocumentCard.propTypes = {
-    docID: PropTypes.string.isRequired,
-};

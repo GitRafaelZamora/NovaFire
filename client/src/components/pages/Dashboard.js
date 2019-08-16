@@ -6,7 +6,7 @@ import Icon from "@material-ui/core/Icon";
 
 // Components
 import DocumentCard from "../atoms/DocumentCard";
-import AddDocumentCard from "../atoms/AddDocumentCard"
+import CreateDocumentCard from "../atoms/CreateDocumentCard"
 
 const useStyles = makeStyles(theme => ({
     // Insert Styles here.
@@ -33,6 +33,16 @@ export class Dashboard extends Component {
                     users: ["rafa"],
                     challenge: "Add W/O Arithmetic Operators"
                 },
+                {
+                    id: "doc125",
+                    users: ["rafa"],
+                    challenge: "Add W/O Arithmetic Operators"
+                },
+                {
+                    id: "doc125",
+                    users: ["rafa"],
+                    challenge: "Add W/O Arithmetic Operators"
+                },
             ],
         }
     }
@@ -41,7 +51,7 @@ export class Dashboard extends Component {
         return (
             <Grid container spacing={2}>
                 <Grid item>
-                    <AddDocumentCard />
+                    <CreateDocumentCard />
                 </Grid>
                 {this.state.documents.map(doc => {
                     return (
