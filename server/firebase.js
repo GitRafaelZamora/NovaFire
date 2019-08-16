@@ -22,7 +22,7 @@ class Firebase {
                 })
                 .catch(function(error) {
                     console.log('Error creating new user:', error);
-                    reject();
+                    reject(error);
                 });
         })
     }

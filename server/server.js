@@ -1,36 +1,9 @@
 let debug = require('debug')('binate:server');
 let http = require('http');
-let express = require('express');
-let path = require('path');
-let cookieParser = require('cookie-parser');
-let logger = require('morgan');
-let bodyParser = require('body-parser');
 require('dotenv').config();
-
-let api = require('./api');
-
-let app = express();
-
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
-app.use(bodyParser.json());
-
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-
-app.use(express.static(path.join(__dirname, 'build')));
-
-app.use('/api', api);
-
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname+'/public/index.html')) ;
-});
-
-let port = normalizePort(process.env.PORT || '5000');
-app.set('port', port);
+const app = require('./app');
+const Socket = require('./socket');
+const Chat = require('./chat');
 
 /**
  * Create HTTP server.
@@ -41,10 +14,22 @@ let server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
-
+let port = normalizePort(process.env.PORT || '5000');
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+/**
+ * Create socket.io connection for chat
+ */
+const io = require('socket.io')(server);
+new Chat().createConnection(io);
+
+/**
+ * Connect to websocket
+ */
+let socket = new Socket(server);
+socket.listen();
 
 /**
  * Normalize a port into a number, string, or false.
