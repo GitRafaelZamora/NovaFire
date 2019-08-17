@@ -6,7 +6,7 @@ import axios from 'axios';
 
 // Components
 import Editor from './components/templates/Editor'
-import Login from './components/pages/Login'
+import Login from './components/atoms/Login'
 import Dashboard from './components/pages/Dashboard'
 import Error from './components/pages/Error'
 import Navbar from './components/organisms/Navbar'
@@ -53,7 +53,7 @@ function App() {
           <Navbar />
           <div className="container">
             <Route exact path="/" component={Home}/>
-            <AuthRoute exact path="/login" component={Login} />
+            <Route exact path="/login" component={Login} />
             <AuthRoute exact path="/dashboard" component={Dashboard} />
             <AuthRoute exact path="/editor" component={Editor} />
             <Route path={["", "/error"]} component={Error} />

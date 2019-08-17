@@ -58,7 +58,13 @@ class Login extends Component {
         };
     }
 
-    handleSubmit(e) {
+    handleChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    handleSubmit = (e) => {
         e.preventDefault();
         const user = {
             email: this.state.email,
@@ -66,7 +72,7 @@ class Login extends Component {
         };
         // Make request to server for credentials.
         this.props.loginUser(user, this.props.history);
-    }
+    };
 
     render() {
         const { classes } = this.props;

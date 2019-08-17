@@ -11,19 +11,34 @@ import axios from 'axios';
 export const loginUser = (user, history) => (dispatch) => {
     dispatch({ type: LOADING_UI });
 
-    axios.post('/login', user)
-        .then((res) => {
-            setAuthorizationHeader(res.data.token);
-            dispatch( getUserData() );
-            dispatch({ type: CLEAR_ERRORS });
-            history.push('/');
+    firebase.auth().signInWithEmailAndPassword(user.email, user.password)
+        .then(data => {
+            return data.user.getIdToken();
+        })
+        .then(token => {
+            return { token };
         })
         .catch(err => {
-            dispatch({
-                type: SET_ERRORS,
-                payload: err.response.data
-            });
+            // if (err.code === 'auth/wrong-password') {
+            //     return res.status(403).json({ general: 'Wrong Credentials, please try again.' });
+            // }
+            console.log(err);
+            return { error: 'Wrong credentials, please try again' };
         });
+
+    // axios.post('/login', user)
+    //     .then((res) => {
+    //         setAuthorizationHeader(res.data.token);
+    //         dispatch( getUserData() );
+    //         dispatch({ type: CLEAR_ERRORS });
+    //         history.push('/');
+    //     })
+    //     .catch(err => {
+    //         dispatch({
+    //             type: SET_ERRORS,
+    //             payload: err.response.data
+    //         });
+    //     });
 };
 
 export const getUserData = () => (dispatch) => {
