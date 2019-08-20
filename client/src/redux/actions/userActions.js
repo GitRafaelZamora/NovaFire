@@ -11,40 +11,26 @@ import axios from 'axios';
 export const loginUser = (user, history) => (dispatch) => {
     dispatch({ type: LOADING_UI });
 
-    firebase.auth().signInWithEmailAndPassword(user.email, user.password)
-        .then(data => {
-            return data.user.getIdToken();
-        })
-        .then(token => {
-            return { token };
+    axios.post('/login', user)
+        .then((res) => {
+            setAuthorizationHeader(res.data.token);
+            dispatch( getUserData() );
+            dispatch({ type: CLEAR_ERRORS });
+            history.push('/');
         })
         .catch(err => {
-            // if (err.code === 'auth/wrong-password') {
-            //     return res.status(403).json({ general: 'Wrong Credentials, please try again.' });
-            // }
-            console.log(err);
-            return { error: 'Wrong credentials, please try again' };
+            dispatch({
+                type: SET_ERRORS,
+                payload: err.response.data
+            });
         });
-
-    // axios.post('/login', user)
-    //     .then((res) => {
-    //         setAuthorizationHeader(res.data.token);
-    //         dispatch( getUserData() );
-    //         dispatch({ type: CLEAR_ERRORS });
-    //         history.push('/');
-    //     })
-    //     .catch(err => {
-    //         dispatch({
-    //             type: SET_ERRORS,
-    //             payload: err.response.data
-    //         });
-    //     });
 };
 
 export const getUserData = () => (dispatch) => {
     dispatch({ type: LOADING_USER });
     axios.get('/user')
         .then((res) => {
+            console.log("Data: " + res.data);
             dispatch({
                 type: SET_USER,
                 payload: res.data

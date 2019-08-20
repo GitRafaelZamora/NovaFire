@@ -21,7 +21,6 @@ exports.FBAuth = (req, res, next) => {
         .then(data => {
             // console.log(data);
             req.user.handle = data.docs[0].data().handle;
-            req.user.imgURL = data.docs[0].data().imgURL;
             return next();
         })
         .catch(err => {

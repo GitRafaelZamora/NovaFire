@@ -22,10 +22,9 @@ export default function( state = initialState, action) {
             return initialState;
         case SET_USER:
             return {
-                ...state,
-                loading: true,
+                loading: false,
                 authenticated: true,
-                credentials: action.payload,
+                ...action.payload,
             };
         case LOADING_USER:
             return {

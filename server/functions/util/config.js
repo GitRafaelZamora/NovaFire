@@ -6,4 +6,4 @@ module.exports = {
     storageBucket: "binate-363ac.appspot.com",
     messagingSenderId: "782168087462",
     appId: "1:782168087462:web:c332c32beed02c1e"
-}
+};

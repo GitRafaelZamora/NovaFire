@@ -1,6 +1,5 @@
 const firebase = require('firebase');
 const { admin, db } = require('../util/admin');
-const jsonfile = require('jsonfile');
 const path = require('path');
 
 exports.getSessions = (request, response) => {

@@ -22,6 +22,8 @@ import { getUserData, logoutUser } from "./redux/actions/userActions";
 import { StylesProvider, createGenerateClassName } from '@material-ui/styles'
 import AuthRoute from "./util/AuthRoute";
 
+axios.defaults.baseURL = 'https://us-central1-binate-363ac.cloudfunctions.net/api';
+
 // Check for previous Auth Token
 const token = localStorage.FBIdToken;
 
@@ -44,6 +46,8 @@ if (token) {
 const generateClassName = createGenerateClassName({
   productionPrefix: 'c',
 });
+
+
 
 function App() {
   return (
