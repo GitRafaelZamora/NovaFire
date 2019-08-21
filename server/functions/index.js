@@ -6,6 +6,7 @@ app.use(cors());
 
 const { login, signup, getAuthenticatedUser } = require('./handlers/users');
 const { getSessions } = require('./handlers/sessions');
+const { createDocument, getDocumentsAssociatedWUserHandle } = require('./handlers/documents');
 const { FBAuth} = require('./util/FBAuth');
 const { db } = require('./util/admin');
 
@@ -17,5 +18,9 @@ app.get('/user', FBAuth, getAuthenticatedUser);
 
 // All the services that interact with Session data.
 app.post('/session', getSessions);
+
+// All the services that interact with Document data.
+app.post('/document', createDocument);
+app.get('/documents', getDocumentsAssociatedWUserHandle);
 
 exports.api = functions.https.onRequest(app);

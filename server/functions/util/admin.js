@@ -10,5 +10,4 @@ const adminConfig = {
 admin.initializeApp(adminConfig);
 const db = admin.firestore();
 
-
 module.exports = { db, admin };
