@@ -1,0 +1,109 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.1.3",
+    "title": "Binate",
+    "description": "A collaborative Text Editor"
+  },
+  "schemes": [
+    "https"
+  ],
+  "host": "binate.api",
+  "basePath": "/api-docs",
+  "paths": {
+    "/document": {
+      "get": {
+        "tags": [
+          "document"
+        ],
+        "summary": "Get a Document object.",
+        "description": "Returns a Document objects.",
+        "parameters": [
+          {
+            "name": "document",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Document"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A Document",
+            "schema": {
+              "$ref": "#/definitions/Document"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "document"
+        ],
+        "summary": "Post a Document object.",
+        "description": "Returns a Document objects.",
+        "responses": {
+          "200": {
+            "description": "A Document",
+            "schema": {
+              "$ref": "#/definitions/Document"
+            }
+          }
+        }
+      }
+    },
+    "/document/save": {
+      "post": {
+        "tags": [
+          "document"
+        ],
+        "summary": "Save an existing Document object.",
+        "description": "Returns a Document object.",
+        "responses": {
+          "200": {
+            "description": "A Document",
+            "schema": {
+              "$ref": "#/definitions/Document"
+            }
+          }
+        }
+      }
+    },
+    "/document/all": { },
+
+    "/user" : { },
+    "/user/signup" : {},
+    "/user/login" : {}
+  },
+  "definitions": {
+    "Document": {
+      "description": "A text document.",
+      "example": {
+        "title": "Given a string determine whether it is a palindrome.",
+        "content": "for (let i = 0; i < string.length; i++) { }",
+        "collaborators": ["Mark Hamill","Pedro Pascal","Alexa"]
+      },
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "collaborators": {
+          "type": "array"
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "document",
+      "description": "Everything that interacts with Document data."
+    },
+    {
+      "name": "user",
+      "description": "Everything that interacts with User data."
+    }
+  ]
+}

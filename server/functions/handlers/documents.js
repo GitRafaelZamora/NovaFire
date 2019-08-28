@@ -1,7 +1,6 @@
 const firebase = require('firebase');
 const {admin, db} = require('../util/admin');
 
-// TODO: Create One document
 exports.createDocument = (req, res) => {
     const document = {
         challenge: req.body.challenge,
@@ -10,7 +9,6 @@ exports.createDocument = (req, res) => {
 
     // Create a new document reference.
     let docRef = db.collection("documents").doc();
-
     let docID = docRef.id;
 
     // Add a new document in collection "documents"
@@ -37,23 +35,43 @@ exports.createDocument = (req, res) => {
             console.error("Error writing document: ", err);
             res.status(500).json({ error: err.code });
         });
-
-
 };
 
 // TODO: Get one document on click type of thang.
-// exports.getDocument = (req, res) => {
-//     const docID = req.body.docID;
-//
-//     db.ref(`/documents/${docID}`).once('value')
-//         .then(snapshot => {
-//             return res.status(200).json({ document: snapshot.val() });
-//         })
-//         .catch(err => {
-//             console.log(err);
-//             res.status(500).json({ error: err.code });
-//         });
-// };
+exports.getDocument = (req, res) => {
+    const docID = req.body.docID;
+
+    db.collection('documents').doc(docID).get()
+        .then(doc => {
+            if (!doc.exists) {
+                return res.status(404).json({ error: "Document not found."})
+            } else {
+                return res.status(200).json(doc.data());
+            }
+        })
+        .catch(err => {
+            console.log("Error retrieving document.");
+            console.log(err);
+            res.status(500).json({ error: err.code });
+        });
+};
+
+exports.saveDocument = (req, res) => {
+    let document = req.body.document;
+    let docID = req.body.docID;
+
+    let docRef = db.collection('documents').doc(docID);
+
+    let merge = docRef.set(document, { merge: true });
+
+    merge
+        .then(() => {
+        res.status(200).json({ msg: "Document saved."})
+        })
+        .catch(err => {
+            res.status(500).json({ error: "Document could not be saved." });
+        });
+};
 
 exports.getDocumentsAssociatedWUserHandle = (req, res) => {
     let userData = {};

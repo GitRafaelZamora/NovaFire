@@ -6,6 +6,7 @@ firebase.initializeApp(config);
 
 const { validateSignUpData, validateLoginData } = require('../util/validators');
 
+// TODO: Write API Documentation in ../swagger.json
 exports.signup = (req, res) => {
     const user = {
         email: req.body.email,
@@ -55,7 +56,7 @@ exports.signup = (req, res) => {
             }
         });
 };
-
+// TODO: Write API Documentation in ../swagger.json
 exports.login = (req, res) => {
     const user = {
         email: req.body.email,
@@ -80,7 +81,7 @@ exports.login = (req, res) => {
             return res.status(403).json({ general: 'Wrong credentials, please try again' });
         });
 };
-
+// TODO: Write API Documentation in ../swagger.json
 exports.getAuthenticatedUser = (req, res) => {
     let userData = {};
 
@@ -93,7 +94,6 @@ exports.getAuthenticatedUser = (req, res) => {
                     .where('handle', '==', req.user.handle)
                     .get();
             }
-            return;
         })
         .then(data => {
             userData.likes = [];
@@ -125,4 +125,4 @@ exports.getAuthenticatedUser = (req, res) => {
             console.log(err);
             return res.status(500).json({ error: err.code })
         })
-}
+};
