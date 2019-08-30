@@ -11,7 +11,7 @@ import axios from 'axios';
 export const loginUser = (user, history) => (dispatch) => {
     dispatch({ type: LOADING_UI });
 
-    axios.post('/login', user)
+    axios.post('/user/login', user)
         .then((res) => {
             setAuthorizationHeader(res.data.token);
             dispatch( getUserData() );
@@ -26,11 +26,14 @@ export const loginUser = (user, history) => (dispatch) => {
         });
 };
 
+// TODO: Write SignUp functionality
+// NOTE: Backend is ready at route: /user/signup
+
 export const getUserData = () => (dispatch) => {
     dispatch({ type: LOADING_USER });
     axios.get('/user')
         .then((res) => {
-            console.log("Data: " + res.data);
+            // console.log("Data: " + res.data);
             dispatch({
                 type: SET_USER,
                 payload: res.data

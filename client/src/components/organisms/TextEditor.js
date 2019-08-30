@@ -17,6 +17,7 @@ const styles = theme => ({
 export class TextEditor extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       wsClient: this.props.setClient(this.props.session),
       user: this.props.user

@@ -11,23 +11,13 @@ import PropTypes from 'prop-types';
 const useStyles = makeStyles({
     card: {
         minWidth: 275,
-        minHeight: 210,
-    },
-    bullet: {
-        display: 'inline-block',
-        margin: '0 2px',
-        transform: 'scale(0.8)',
+        minHeight: 275,
     },
     title: {
         fontSize: 14,
     },
-    pos: {
-        marginBottom: 12,
-    },
-    addContainer: {
-        textAlign: 'center'
-    },
     add: {
+        margin: '0',
         fontSize: '100px',
         color: 'blue'
     }
@@ -45,12 +35,7 @@ export default function CreateDocumentCard(props) {
                 <Typography variant="h5" component="h2">
                     {props.docID}
                 </Typography>
-                <Typography className={classes.pos} color="textSecondary">
-                    {props.users}
-                </Typography>
-                <Typography className={classes.addContainer} variant="body2" component="p">
-                    <AddBox className={classes.add} fontSize={"large"} />
-                </Typography>
+                <AddBox className={classes.add} />
             </CardContent>
         </Card>
     );

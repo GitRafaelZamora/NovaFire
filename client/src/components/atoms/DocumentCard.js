@@ -15,6 +15,7 @@ import CreateDocumentCard from "./CreateDocumentCard";
 const useStyles = makeStyles({
     card: {
         minWidth: 275,
+        minHeight: 275
     },
     bullet: {
         display: 'inline-block',
@@ -44,13 +45,13 @@ function DocumentCard(props) {
                     Created by: Rafael
                 </Typography>
                 <Typography variant="h5" component="h2">
-                    {props.docID}
+                    {props.title}
                 </Typography>
                 <Typography className={classes.pos} color="textSecondary">
                     {props.users}
                 </Typography>
                 <Typography variant="body2" component="p">
-                    {props.challenge}
+                    {props.content}
                 </Typography>
             </CardContent>
             <CardActions>

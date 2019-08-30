@@ -1,36 +1,25 @@
 import {
-    SET_DOCUMENT_ID,
-    ADD_DOCUMENT_USER,
-    REMOVE_DOCUMENT_USER,
     SET_DOCUMENT,
     LOADING_DOCUMENT,
+    SET_DOCUMENTS
 } from '../types';
 
 const initialState = {
-    documentID: null,
-    document: null,
     documents: [],
-    users: [],
-    loading: false,
+    loading: true,
 };
 
 export default function( state = initialState, action) {
     switch (action.type) {
-        case SET_DOCUMENT_ID:
-            return {
-                ...state,
-            };
-        case ADD_DOCUMENT_USER:
-            return {
-                ...state,
-            };
-        case REMOVE_DOCUMENT_USER:
-            return {
-                ...state,
-            };
         case SET_DOCUMENT:
             return {
                 ...state,
+            };
+        case SET_DOCUMENTS:
+            return {
+                ...state,
+                documents: action.payload,
+                loading: false,
             };
         case LOADING_DOCUMENT:
             return {
