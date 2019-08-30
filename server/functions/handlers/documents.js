@@ -37,7 +37,6 @@ exports.createDocument = (req, res) => {
         });
 };
 
-// TODO: Get one document on click type of thang.
 exports.getDocument = (req, res) => {
     const docID = req.body.docID;
 
@@ -74,29 +73,76 @@ exports.saveDocument = (req, res) => {
 };
 
 exports.getDocumentsAssociatedWUserHandle = (req, res) => {
-    let userData = {};
+    let user = {};
+    user.documents = [];
 
     db.doc(`/users/${req.user.handle}`).get()
-        .then(doc => {
-            if (doc.exists) {
-                userData.credentials = doc.data();
+        .then(fireUser => {
+            if (fireUser.exists) {
+                user.credentials = fireUser.data();
                 // TODO: Get Documents
-                return db.collection('collaborators')
-                    .where('handle', '==', req.user.handle)
-                    .orderBy('createAt', 'desc')
-                    .limit(10)
-                    .get();
+                console.log("req.user.handle: " + req.user.handle);
+                return db.collection('collaborators').where('handle', '==', req.user.handle).get()
             }
         })
-        .then(data => {
-            userData.documents = [];
-            data.forEach(doc => {
-                userData.documents.push(doc.data());
-            });
-            return res.status(200).json(userData);
+        .then(collaboratingIDs => {
+            if (collaboratingIDs.empty) {
+                console.log("User has no documents");
+                return res.status(404).json({ error: "User has no documents" });
+            } else {
+                let apply = [];
+                collaboratingIDs.forEach(relation => {
+                    console.log('\t' + relation.id, '=>', relation.data());
+                    let textDocumentID = relation.data().docID;
+                    // Get a document.
+                    apply.push(db.collection('documents').doc(textDocumentID).get());
+                });
+                console.log(apply);
+                Promise.all(apply)
+                    .then(textDocument => {
+                        console.log("\t\ttextDocument");
+                        textDocument.forEach(document => {
+                            user.documents.push(document.data());
+                        });
+                    })
+                    .then(() => {
+                    return res.status(200).json(user);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        console.log("Promise Error");
+                    })
+            }
+        })
+        .catch(err => {
+            console.log("Error retrieving document.");
+            console.log(err);
+            res.status(500).json({ error: err.code });
+        })
+};
+
+exports.deleteDocument = (req, res) => {
+    let response = [];
+
+    db.collection('documents').doc(req.body.docID).delete()
+        .then(() => {
+            console.log("Document deleted");
+            db.collection('collaborators').where('docID', '==', req.body.docID).get()
+                .then(collaboratingDocuments => {
+                    collaboratingDocuments.forEach(relation => {
+                        db.collection('collaborators').doc(relation.id).delete()
+                            .then(() => {
+                                res.status(200).json({msg: "Successfully deleted document."})
+                            });
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                    console.log("Error deleting collaborator relations.");
+                });
         })
         .catch(err => {
             console.log(err);
-            return res.status(500).json({ error: err.code });
+            console.log("Error deleting document");
         });
 };

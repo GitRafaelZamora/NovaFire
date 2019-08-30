@@ -50,6 +50,24 @@
             }
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "document"
+        ],
+        "summary": "Deletes a Document object.",
+        "description": "Returns a Document objects.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "string",
+              "example": {
+                "msg": "Successfully deleted document: HASdfX51SugGfnFasT3QasDm3dJ6C2"
+              }
+            }
+          }
+        }
       }
     },
     "/document/save": {
@@ -70,10 +88,47 @@
       }
     },
     "/document/all": { },
+    "/documents": {
+      "get": {
+        "tags": [
+          "document"
+        ],
+        "summary": "Get an array Document object.",
+        "description": "Returns an array Document objects.",
+        "parameters": [
 
-    "/user" : { },
-    "/user/signup" : {},
-    "/user/login" : {}
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of Documents",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Documents"
+            }
+          }
+        }
+      }
+    },
+
+    "/user" : {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get a users credentials",
+        "description": "Returns a User",
+        "responses": {
+          "200": {
+            "description": "A User",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/user/signup" : { },
+    "/user/login" : { }
   },
   "definitions": {
     "Document": {
@@ -92,6 +147,73 @@
         },
         "collaborators": {
           "type": "array"
+        }
+      }
+    },
+    "Documents": {
+      "description": "A array of Document.",
+      "example": {
+        "documents": [
+          {
+            "content": "Some Content",
+            "collaborators": [
+              "User1",
+              "User2",
+              "User3",
+              "User4"
+            ],
+            "title": "First Document"
+          },
+          {
+            "title": "Second Document",
+            "content": "Some content",
+            "collaborators": [
+              "User1",
+              "User2"
+            ]
+          }
+        ],
+        "credentials": {
+          "uid": "HASdfX51SugGfnFasT3QasDm3dJ6C2",
+          "handle": "User1",
+          "email": "user1@email.com",
+          "createAt": "2019-08-28T23:48:09.652Z"
+        }
+      },
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "collaborators": {
+          "type": "array"
+        }
+      }
+    },
+    "User": {
+      "description": "A User.",
+      "example": {
+          "credentials": {
+            "uid": "Hc6dfX51SuZnFffVT3Q3rm3dJ6C2",
+            "handle": "User1",
+            "email": "user1@email.com",
+            "createAt": "2019-08-28T23:48:09.652Z"
+          }
+      },
+      "properties": {
+        "credentials": {
+          "type": "string"
+        },
+        "handle": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
         }
       }
     }

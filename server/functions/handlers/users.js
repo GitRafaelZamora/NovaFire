@@ -89,37 +89,8 @@ exports.getAuthenticatedUser = (req, res) => {
         .then(doc => {
             if (doc.exists) {
                 userData.credentials = doc.data();
-                // TODO: Get Likes
-                return db.collection('likes')
-                    .where('handle', '==', req.user.handle)
-                    .get();
+                res.status(200).json(userData);
             }
-        })
-        .then(data => {
-            userData.likes = [];
-            data.forEach(doc => {
-                userData.likes.push(doc.data());
-            });
-            return db.collection('notifications')
-                .where('recipient', '==', req.user.handle)
-                .orderBy('createAt', 'desc')
-                .limit(10)
-                .get();
-        })
-        .then(data => {
-            userData.notifications = [];
-            data.forEach(doc => {
-                userData.notifications.push({
-                    recipient: doc.data().recipient,
-                    sender: doc.data().sender,
-                    createAt: doc.data().createAt,
-                    postID: doc.data().postID,
-                    type: doc.data().type,
-                    read: doc.data().read,
-                    notificationsID: doc.id
-                });
-            });
-            return res.json(userData);
         })
         .catch(err => {
             console.log(err);

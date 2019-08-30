@@ -10,7 +10,7 @@ app.use(cors());
 
 const { login, signup, getAuthenticatedUser } = require('./handlers/users');
 const { getSessions } = require('./handlers/sessions');
-const { createDocument, getDocument, getDocumentsAssociatedWUserHandle, saveDocument } = require('./handlers/documents');
+const { createDocument, getDocument, getDocumentsAssociatedWUserHandle, saveDocument, deleteDocument } = require('./handlers/documents');
 const { FBAuth} = require('./util/FBAuth');
 const { db } = require('./util/admin');
 
@@ -23,8 +23,9 @@ app.get('/user', FBAuth, getAuthenticatedUser);
 // All the services that interact with Session data.
 app.post('/session', getSessions);
 // All the services that interact with Document data.
-app.get('/documents', getDocumentsAssociatedWUserHandle);
+app.get('/documents', FBAuth, getDocumentsAssociatedWUserHandle);
 app.get('/document', getDocument);
+app.delete('/document', deleteDocument);
 app.post('/document', createDocument);
 app.post('/document/save', saveDocument);
 

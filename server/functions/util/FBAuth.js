@@ -4,6 +4,7 @@ exports.FBAuth = (req, res, next) => {
     let tokenID;
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
         tokenID = req.headers.authorization.split('Bearer ')[1];
+        // console.log("tokenID: " + tokenID);
     } else {
         console.log('No token found.');
         return res.status(403).json({ error: 'Unauthorized' });

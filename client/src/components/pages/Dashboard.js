@@ -16,34 +16,7 @@ export class Dashboard extends Component {
         super(props);
         this.state = {
             user: null,
-            documents: [
-                {
-                    id: "doc123",
-                    users: ["rafa", "david"],
-                    challenge: "Add W/O Arithmetic Operators"
-                },
-                {
-                    id: "doc124",
-                    users: ["rafa", "david", "vivian"],
-                    challenge: "Add W/O Arithmetic Operators"
-                },
-                {
-                    id: "doc125",
-                    users: ["rafa"],
-                    challenge: "Add W/O Arithmetic Operators"
-                },
-                {
-                    id: "doc126",
-                    users: ["rafa"],
-                    challenge: "Add W/O Arithmetic Operators"
-                },
-                {
-                    id: "doc127",
-                    users: ["rafa"],
-                    challenge: "Add W/O Arithmetic Operators",
-                    text: "for (let i = 0; i < 12; i++) { ..."
-                },
-            ],
+
         }
     }
 
