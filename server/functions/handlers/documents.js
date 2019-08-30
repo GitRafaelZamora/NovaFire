@@ -74,7 +74,8 @@ exports.saveDocument = (req, res) => {
 
 exports.getDocumentsAssociatedWUserHandle = (req, res) => {
     let user = {};
-    user.documents = [];
+    let documents = [];
+    let textDocumentID = '';
 
     db.doc(`/users/${req.user.handle}`).get()
         .then(fireUser => {
@@ -93,7 +94,7 @@ exports.getDocumentsAssociatedWUserHandle = (req, res) => {
                 let apply = [];
                 collaboratingIDs.forEach(relation => {
                     console.log('\t' + relation.id, '=>', relation.data());
-                    let textDocumentID = relation.data().docID;
+                    textDocumentID = relation.data().docID;
                     // Get a document.
                     apply.push(db.collection('documents').doc(textDocumentID).get());
                 });
@@ -102,11 +103,11 @@ exports.getDocumentsAssociatedWUserHandle = (req, res) => {
                     .then(textDocument => {
                         console.log("\t\ttextDocument");
                         textDocument.forEach(document => {
-                            user.documents.push(document.data());
+                            documents.push({...document.data(), docID: document.id});
                         });
                     })
                     .then(() => {
-                    return res.status(200).json(user);
+                    return res.status(200).json(documents);
                     })
                     .catch(err => {
                         console.log(err);
