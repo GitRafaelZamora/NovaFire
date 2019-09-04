@@ -24,7 +24,7 @@ app.get('/user', FBAuth, getAuthenticatedUser);
 app.post('/session', getSessions);
 // All the services that interact with Document data.
 app.get('/documents', FBAuth, getDocumentsAssociatedWUserHandle);
-app.get('/document', getDocument);
+app.get('/document/:docID', getDocument);
 app.delete('/document', deleteDocument);
 app.post('/document', createDocument);
 app.post('/document/save', saveDocument);

@@ -38,7 +38,7 @@ exports.createDocument = (req, res) => {
 };
 
 exports.getDocument = (req, res) => {
-    const docID = req.body.docID;
+    const docID = req.params.docID;
 
     db.collection('documents').doc(docID).get()
         .then(doc => {
