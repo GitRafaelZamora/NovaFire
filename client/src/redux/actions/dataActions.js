@@ -12,10 +12,10 @@ export const setClient = (session) => (dispatch) => {
       type: ON_MESSAGE,
       payload: session
     });
-    client.send(JSON.stringify({
-      type: SET_SESSION,
-      session: session
-    }))
+    // client.send(JSON.stringify({
+    //   type: SET_SESSION,
+    //   session: session
+    // }));
   };
 
   // on message received from websocket server
@@ -35,26 +35,26 @@ export const setClient = (session) => (dispatch) => {
       payload: newState
     });
 
-    dispatch({
-      type: SET_CLIENT,
-      payload: client
-    });
+    // dispatch({
+    //   type: SET_CLIENT,
+    //   payload: client
+    // });
 
   };
 
   return client;
 };
 
-export const setCode = (client, code, user) => (dispatch) => {
+export const setCode = (code, user) => (dispatch) => {
     dispatch({
       type: SET_CODE,
       payload: code
     });
-    client.send(JSON.stringify({
-      type: "TEXT_CHANGE",
-      username: user,
-      code: code
-    }));
+    // client.send(JSON.stringify({
+    //   type: "TEXT_CHANGE",
+    //   username: user,
+    //   code: code
+    // }));
 
   };
 

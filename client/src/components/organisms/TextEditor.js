@@ -19,18 +19,18 @@ export class TextEditor extends Component {
     super(props);
 
     this.state = {
-      wsClient: this.props.setClient(this.props.session),
+      // wsClient: this.props.setClient(this.props.session),
       user: this.props.user,
       activeDocument: this.props.activeDocument,
     }
   }
 
   updateCode = (code) => {
-    this.props.setCode(this.state.wsClient, code, this.state.user.email);
+    this.props.setCode(code, this.props.user.email);
   };
 
   componentDidMount() {
-    this.props.setClient(this.props.session);
+    // this.props.setClient(this.props.session);
     this.props.setCode(this.props.document.activeDocument.content);
   }
 
@@ -57,6 +57,7 @@ TextEditor.propTypes = {
 
 const mapStateToProps = (state) => ({
   code: state.data.code,
+  user: state.user,
   document: state.document,
 });
 
