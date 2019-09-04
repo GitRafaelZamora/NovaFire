@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 // Material UI 
 import { withStyles } from '@material-ui/core/styles';
@@ -25,11 +26,7 @@ class Editor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sessionID: null,
-      session: null,
-      user: null,
-      noUserFound: false,
-      noSession: false
+
     }
   }
 
@@ -37,7 +34,7 @@ class Editor extends Component {
     return (
         <Grid container>
           <Grid item xs={8} sm={6} md={8}>
-            <TextEditor session={this.state.session} user={this.state.user}/>
+            <TextEditor />
           </Grid>
           <Grid item xs={4} sm={6} md={4}>
             <SideBar />
@@ -49,5 +46,11 @@ class Editor extends Component {
     )
   }
 }
+const mapStateToProps = (state) => ({
+  document: state.document,
+});
 
-export default withStyles(styles)(Editor);
+const mapActionsToProps = {
+
+};
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(Editor));

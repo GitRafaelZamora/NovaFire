@@ -20,13 +20,19 @@ export class TextEditor extends Component {
 
     this.state = {
       wsClient: this.props.setClient(this.props.session),
-      user: this.props.user
+      user: this.props.user,
+      activeDocument: this.props.activeDocument,
     }
   }
 
   updateCode = (code) => {
     this.props.setCode(this.state.wsClient, code, this.state.user.email);
   };
+
+  componentDidMount() {
+    this.props.setClient(this.props.session);
+    this.props.setCode(this.props.document.activeDocument.content);
+  }
 
   render() {
     const classes = this.props.classes;
@@ -45,13 +51,13 @@ export class TextEditor extends Component {
 TextEditor.propTypes = {
   setHistory: Proptypes.func.isRequired,
   setCode: Proptypes.func.isRequired,
-  documentHistory: Proptypes.array.isRequired,
+  document: Proptypes.object.isRequired,
   code: Proptypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
   code: state.data.code,
-  documentHistory: state.data.documentHistory
+  document: state.document,
 });
 
 const mapActionsToProps = {

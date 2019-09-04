@@ -5,6 +5,7 @@ import {
 } from '../types';
 
 const initialState = {
+    activeDocument: null,
     documents: [],
     loading: true,
 };
@@ -14,6 +15,7 @@ export default function( state = initialState, action) {
         case SET_DOCUMENT:
             return {
                 ...state,
+                activeDocument: action.payload,
             };
         case SET_DOCUMENTS:
             return {

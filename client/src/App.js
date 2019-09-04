@@ -59,7 +59,7 @@ function App() {
             <Route exact path="/" component={Home}/>
             <Route exact path="/login" component={Login} />
             <AuthRoute exact path="/dashboard" component={Dashboard} />
-            <AuthRoute exact path="/editor" component={Editor} />
+            <AuthRoute path="/editor" component={Editor} />
             <Route path={["", "/error"]} component={Error} />
           </div>
         </Router>

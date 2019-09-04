@@ -29,11 +29,8 @@ export default function CreateDocumentCard(props) {
     return (
         <Card className={classes.card}>
             <CardContent>
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    Create New Document
-                </Typography>
                 <Typography variant="h5" component="h2">
-                    {props.docID}
+                    Create New Document
                 </Typography>
                 <AddBox className={classes.add} />
             </CardContent>

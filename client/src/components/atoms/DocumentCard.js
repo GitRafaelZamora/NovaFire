@@ -10,7 +10,6 @@ import PropTypes from 'prop-types';
 // Redux
 import { connect } from 'react-redux';
 import { getDocument } from "../../redux/actions/documentActions";
-import CreateDocumentCard from "./CreateDocumentCard";
 
 const useStyles = makeStyles({
     card: {
