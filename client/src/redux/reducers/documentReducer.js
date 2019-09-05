@@ -1,7 +1,7 @@
 import {
     SET_DOCUMENT,
     LOADING_DOCUMENT,
-    SET_DOCUMENTS
+    SET_DOCUMENTS, CREATE_DOCUMENT
 } from '../types';
 
 const initialState = {
@@ -28,6 +28,11 @@ export default function( state = initialState, action) {
             return {
                 ...state,
                 loading: true,
+            };
+        case CREATE_DOCUMENT:
+            return {
+                ...state,
+                documents: [...state.documents, action.payload]
             };
         default:
             return state;

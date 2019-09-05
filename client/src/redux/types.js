@@ -20,3 +20,4 @@ export const LOADING_UI = 'LOADING_UI';
 export const STOP_LOADING_UI = 'STOP_LOADING_UI';
 export const SET_DOCUMENTS = 'SET_DOCUMENTS';
 export const SAVE_DOCUMENT = 'SAVE_DOCUMENT';
+export const CREATE_DOCUMENT = 'CREATE_DOCUMENT';

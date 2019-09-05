@@ -37,6 +37,7 @@
     "html-webpack-plugin": "^3.2.0",
     "image-webpack-loader": "^5.0.0",
     "jwt-decode": "^2.2.0",
+    "lodash.throttle": "^4.1.1",
     "materialize-css": "^1.0.0",
     "prismjs": "^1.17.1",
     "react": "^16.9.0",
@@ -75,5 +76,4 @@
     "extends": "react-app"
   },
   "proxy": "https://us-central1-binate-363ac.cloudfunctions.net/api"
-
 }
