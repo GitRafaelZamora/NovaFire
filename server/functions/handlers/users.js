@@ -7,6 +7,7 @@ firebase.initializeApp(config);
 const { validateSignUpData, validateLoginData } = require('../util/validators');
 
 // TODO: Write API Documentation in ../swagger.json
+// NOTE: Feel free to rewrite logic. if it does not work with Postman or the React client.git
 exports.signup = (req, res) => {
     const user = {
         email: req.body.email,

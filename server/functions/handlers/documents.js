@@ -3,8 +3,9 @@ const {admin, db} = require('../util/admin');
 
 exports.createDocument = (req, res) => {
     const document = {
-        challenge: req.body.challenge,
-        text: req.body.text,
+        content: req.body.content,
+        title: req.body.title,
+        collaborators: [req.body.handle],
     };
 
     // Create a new document reference.
@@ -14,7 +15,6 @@ exports.createDocument = (req, res) => {
     // Add a new document in collection "documents"
     docRef.set({...document, docID: docID})
         .then(() => {
-            res.status(200).json({ msg: "Document successfully written!" });
             console.log("Document successfully written!");
             const collaborator = {
                 handle: req.body.handle,
@@ -22,8 +22,8 @@ exports.createDocument = (req, res) => {
             };
             // add the creator to "collaborator" collection
             db.collection('collaborators').doc().set(collaborator)
-                .then(() => {
-                    res.status(200).json({ msg: "Collaborator successfully written!" });
+                .then((doc) => {
+                    res.status(200).json({ ...document, docID });
                     console.log("Collaborator successfully written!");
                 })
                 .catch(err => {
