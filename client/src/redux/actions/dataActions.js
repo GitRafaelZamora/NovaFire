@@ -1,4 +1,4 @@
-import { SET_HISTORY, SET_CODE, SET_CLIENT, ON_MESSAGE, SET_SESSION } from '../types';
+import { SET_HISTORY, SET_CONTENT, SET_CLIENT, ON_MESSAGE, SET_SESSION } from '../types';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
 export const setClient = (session) => (dispatch) => {
@@ -45,18 +45,12 @@ export const setClient = (session) => (dispatch) => {
   return client;
 };
 
-export const setCode = (code, user) => (dispatch) => {
+export const setContent = (content, user) => (dispatch) => {
     dispatch({
-      type: SET_CODE,
-      payload: code
+      type: SET_CONTENT,
+      payload: content
     });
-    // client.send(JSON.stringify({
-    //   type: "TEXT_CHANGE",
-    //   username: user,
-    //   code: code
-    // }));
-
-  };
+};
 
   export const setHistory = (documentHistory) => (dispatch) => {
     dispatch({

@@ -1,4 +1,4 @@
-export const SET_CODE = 'SET_CODE';
+export const SET_CONTENT = 'SET_CONTENT';
 export const SET_HISTORY = 'SET_HISTORY';
 export const SET_SESSION = 'SET_SESSION';
 export const SET_CLIENT = 'SET_CLIENT';
@@ -19,3 +19,4 @@ export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 export const LOADING_UI = 'LOADING_UI';
 export const STOP_LOADING_UI = 'STOP_LOADING_UI';
 export const SET_DOCUMENTS = 'SET_DOCUMENTS';
+export const SAVE_DOCUMENT = 'SAVE_DOCUMENT';

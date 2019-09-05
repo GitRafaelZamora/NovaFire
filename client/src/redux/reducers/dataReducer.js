@@ -1,8 +1,8 @@
-import { SET_CODE, SET_HISTORY, SET_CLIENT, ON_MESSAGE } from '../types'
+import { SET_CONTENT, SET_HISTORY, SET_CLIENT, ON_MESSAGE } from '../types'
 // import testcode from '../../assets/testcode'
 
 const initialState = {
-  code: "// Live editor ...",
+  content: localStorage.getItem("content"),
   documentHistory: [],
   currentUsers: [],
   client: {}
@@ -21,10 +21,10 @@ export default function (state = initialState, action) {
           ...state,
           ...action.payload
       };
-    case SET_CODE:
+    case SET_CONTENT:
       return {
           ...state,
-          code: action.payload
+          content: action.payload
       };
     case SET_HISTORY:
       return {

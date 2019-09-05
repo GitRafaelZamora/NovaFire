@@ -1,8 +1,12 @@
 import React from 'react';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 import './App.css';
-import jwtDecode from 'jwt-decode';
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
+import { loadState, saveState } from "./util/localStorage";
+
+// Material UI
+import { StylesProvider, createGenerateClassName } from '@material-ui/styles'
 
 // Components
 import Editor from './components/templates/Editor'
@@ -11,16 +15,14 @@ import Dashboard from './components/pages/Dashboard'
 import Error from './components/pages/Error'
 import Navbar from './components/organisms/Navbar'
 import Home from './components/pages/Home'
+import AuthRoute from "./util/AuthRoute";
 
 // Redux
-import { Provider } from 'react-redux'
 import store from './redux/store'
+import { Provider } from 'react-redux'
 import { SET_AUTHENTICATED } from "./redux/types";
 import { getUserData, logoutUser } from "./redux/actions/userActions";
 
-// Material UI
-import { StylesProvider, createGenerateClassName } from '@material-ui/styles'
-import AuthRoute from "./util/AuthRoute";
 
 axios.defaults.baseURL = 'https://us-central1-binate-363ac.cloudfunctions.net/api';
 
@@ -46,8 +48,6 @@ if (token) {
 const generateClassName = createGenerateClassName({
   productionPrefix: 'c',
 });
-
-
 
 function App() {
   return (

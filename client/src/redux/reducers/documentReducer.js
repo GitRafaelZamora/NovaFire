@@ -15,13 +15,14 @@ export default function( state = initialState, action) {
         case SET_DOCUMENT:
             return {
                 ...state,
+                loading: false,
                 activeDocument: action.payload,
             };
         case SET_DOCUMENTS:
             return {
                 ...state,
-                documents: action.payload,
                 loading: false,
+                documents: action.payload,
             };
         case LOADING_DOCUMENT:
             return {

@@ -1,7 +1,8 @@
 import {
     SET_DOCUMENTS,
     SET_DOCUMENT,
-    LOADING_DOCUMENT
+    LOADING_DOCUMENT,
+    SAVE_DOCUMENT
 } from "../types";
 import axios from 'axios';
 
@@ -15,7 +16,6 @@ export const getDocument = (docID) => (dispatch) => {
                 type: SET_DOCUMENT,
                 payload: res.data
             });
-
         })
         .catch((err) => {
             console.log(`Client Error retrieving document.`);
@@ -38,4 +38,19 @@ export const getDocuments = () => (dispatch) => {
             console.log(`Error retrieving document.`);
             console.log(err);
         });
+};
+
+export const saveDocument = (doc) => (dispatch) => {
+    dispatch({ type: SAVE_DOCUMENT });
+    axios.post('/document/save', doc)
+        .then(res => {
+            dispatch({
+                type: SET_DOCUMENT,
+                payload: res.data
+            });
+        })
+        .catch(err => {
+            console.log("Error saving document.");
+            console.log(err);
+        })
 };
