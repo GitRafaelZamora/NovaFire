@@ -59,16 +59,15 @@ exports.getDocument = (req, res) => {
 };
 
 exports.saveDocument = (req, res) => {
-    let document = req.body.document;
+    let document = req.body;
     let docID = req.body.docID;
 
     let docRef = db.collection('documents').doc(document.docID);
 
-    let merge = docRef.set(document, { merge: true });
+    let merge = docRef.set(document);
 
-    merge
-        .then(() => {
-        res.status(200).json({ msg: "Document saved."})
+    merge.then(() => {
+            res.status(200).json({ msg: "Document saved."})
         })
         .catch(err => {
             res.status(500).json({ error: "Document could not be saved." });
