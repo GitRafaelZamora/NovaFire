@@ -12,7 +12,7 @@ exports.createDocument = (req, res) => {
     let docID = docRef.id;
 
     // Add a new document in collection "documents"
-    docRef.set(document)
+    docRef.set({...document, docID: docID})
         .then(() => {
             res.status(200).json({ msg: "Document successfully written!" });
             console.log("Document successfully written!");
@@ -20,7 +20,7 @@ exports.createDocument = (req, res) => {
                 handle: req.body.handle,
                 docID: docID,
             };
-            // TODO: Need to add the creator to "collaborator" collection
+            // add the creator to "collaborator" collection
             db.collection('collaborators').doc().set(collaborator)
                 .then(() => {
                     res.status(200).json({ msg: "Collaborator successfully written!" });
@@ -45,7 +45,10 @@ exports.getDocument = (req, res) => {
             if (!doc.exists) {
                 return res.status(404).json({ error: "Document not found."})
             } else {
-                return res.status(200).json(doc.data());
+                return res.status(200).json({
+                    ...doc.data(),
+                    docID: docID,
+                });
             }
         })
         .catch(err => {
@@ -59,7 +62,7 @@ exports.saveDocument = (req, res) => {
     let document = req.body.document;
     let docID = req.body.docID;
 
-    let docRef = db.collection('documents').doc(docID);
+    let docRef = db.collection('documents').doc(document.docID);
 
     let merge = docRef.set(document, { merge: true });
 
