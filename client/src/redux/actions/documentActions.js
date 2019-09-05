@@ -3,7 +3,7 @@ import {
     SET_DOCUMENT,
     LOADING_DOCUMENT,
     SAVE_DOCUMENT,
-    CREATE_DOCUMENT
+    CREATE_DOCUMENT, SET_CONTENT
 } from "../types";
 import axios from 'axios';
 
@@ -42,12 +42,12 @@ export const getDocuments = () => (dispatch) => {
 };
 
 export const saveDocument = (doc) => (dispatch) => {
-    dispatch({ type: SAVE_DOCUMENT });
+    console.log(doc);
     axios.post('/document/save', doc)
         .then(res => {
+            console.log(res.data);
             dispatch({
-                type: SET_DOCUMENT,
-                payload: res.data
+                type: SAVE_DOCUMENT
             });
         })
         .catch(err => {
@@ -68,4 +68,11 @@ export const createDocument = (title, content, handle) => (dispatch) => {
             console.log("Error creating document.");
             console.log(err);
         })
+};
+
+export const setContent = (content) => (dispatch) => {
+    dispatch({
+        type: SET_CONTENT,
+        payload: content
+    });
 };

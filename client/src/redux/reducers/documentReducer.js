@@ -1,7 +1,7 @@
 import {
     SET_DOCUMENT,
     LOADING_DOCUMENT,
-    SET_DOCUMENTS, CREATE_DOCUMENT
+    SET_DOCUMENTS, CREATE_DOCUMENT, SAVE_DOCUMENT, SET_CONTENT
 } from '../types';
 
 const initialState = {
@@ -17,6 +17,19 @@ export default function( state = initialState, action) {
                 ...state,
                 loading: false,
                 activeDocument: action.payload,
+            };
+        case SAVE_DOCUMENT:
+            return {
+                ...state,
+            };
+        case SET_CONTENT:
+            const prevActiveDocument = state.activeDocument;
+            return {
+                ...state,
+                activeDocument: {
+                    ...prevActiveDocument,
+                    content: action.payload,
+                }
             };
         case SET_DOCUMENTS:
             return {

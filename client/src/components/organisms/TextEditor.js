@@ -6,7 +6,8 @@ import Button from '@material-ui/core/Button';
 // React Editor
 import { LiveProvider, LiveEditor } from 'react-live';
 // Redux
-import { setContent, setHistory, setClient } from '../../redux/actions/dataActions'
+import { setHistory, setClient } from '../../redux/actions/dataActions'
+import { saveDocument, setContent } from '../../redux/actions/documentActions'
 import { connect } from 'react-redux'
 import Proptypes from 'prop-types'
 
@@ -32,6 +33,7 @@ class TextEditor extends Component {
   };
 
   componentDidMount() {
+    // TODO: Introduce socket server logic
     // Check if someone is editing document.
     // TRUE: Request Document from socket.
     // FALSE: Request Document from server.
@@ -39,7 +41,7 @@ class TextEditor extends Component {
   }
 
   handleSave = (e) => {
-    this.props.saveDocument(localStorage.getItem("content"));
+    this.props.saveDocument(this.props.document.activeDocument);
   };
 
   render() {
@@ -50,8 +52,7 @@ class TextEditor extends Component {
     console.log(document.loading);
 
     let markup = document.loading ? <p>Loading</p> :
-        (
-            <>
+        (<>
           <LiveProvider code={content}  contentEditable={true}>
             <LiveEditor name="content" onChange={this.updateContent} />
           </LiveProvider>
@@ -62,9 +63,7 @@ class TextEditor extends Component {
                   onClick={this.handleSave}>
             Save
           </Button>
-            </>
-        );
-
+            </>);
     return (
         <>
         {markup}
@@ -88,7 +87,8 @@ const mapStateToProps = (state) => ({
 const mapActionsToProps = {
   setContent,
   setHistory,
-  setClient
+  setClient,
+  saveDocument,
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(TextEditor));
