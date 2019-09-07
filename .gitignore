@@ -21,7 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
 .idea
 server/binate-363ac-firebase-adminsdk-lmonn-88df331a6c.json
 server/functions/serviceAccount.json
@@ -29,3 +28,6 @@ server/database/sessions.json
 server/.env
 server/node_modules
 client/node_modules
+
+src/util/serviceAccount.json
+client/src/util/firebase/serviceAccount.json
