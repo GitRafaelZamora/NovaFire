@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 // Material UI
 import { withStyles } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 
 // React Editor
 import { LiveProvider, LiveEditor } from 'react-live';
@@ -11,9 +10,16 @@ import { saveDocument, setContent } from '../../redux/actions/documentActions'
 import { connect } from 'react-redux'
 import Proptypes from 'prop-types'
 
-
 const styles = theme => ({
-  /* Add Component Styles Here */
+  firepadContainer: {
+    backgroundColor: '#282c34',
+    color: "white",
+    height: "1000px",
+    margin: "auto"
+  },
+  textEditor: {
+
+  }
 });
 
 class TextEditor extends Component {
@@ -33,41 +39,67 @@ class TextEditor extends Component {
   };
 
   componentDidMount() {
-    // TODO: Introduce socket server logic
-    // Check if someone is editing document.
-    // TRUE: Request Document from socket.
-    // FALSE: Request Document from server.
-      this.props.setContent(this.state.activeDocument.content)
+    // Get Firebase Database reference to the document.
+    // var firepadRef = this.getTextDocumentRef(this.props.document.activeDocument.docID);
+    var firepadRef = this.getTextDocumentRef();
+
+    // monaco.editor.create(document.getElementById('firepad-container'), {
+    //   language: 'javascript'
+    // });
+
+    // Create CodeMirror
+    var codeMirror = window.CodeMirror(document.getElementById('firepad-container'),
+        { lineWrapping: true, lineNumbers: true }
+    );
+    console.log(codeMirror);
+
+    // Create Firepad
+    var firepad = window.Firepad.fromCodeMirror(firepadRef, codeMirror, {
+      richTextToolbar: false,
+      richTextShortcuts: true
+    });
+    console.log(firepad);
+
+    // Initialize contents.
+    firepad.on('ready', function() {
+      console.log("firepad ready");
+      if (firepad.isHistoryEmpty()) {
+        console.log("History empty()");
+        firepad.setHtml('Collaborative-editing made easy.\n');
+      }
+    });
   }
 
   handleSave = (e) => {
     this.props.saveDocument(this.props.document.activeDocument);
   };
 
+  getTextDocumentRef() {
+    var ref = window.firebase.database().ref();
+    var hash = window.location.hash.replace(/#/g, '');
+    if (hash) {
+      ref = ref.child(hash);
+    } else {
+      ref = ref.push();
+      console.log(window.location);
+      window.location = window.location + '#' + ref.key;
+    }
+    if (typeof console !== 'undefined') {
+      console.log('Firebase data: ', ref.toString());
+    }
+    return ref;
+  }
+
   render() {
-    const classes = this.props.classes;
     const { document }  = this.props;
-    const content = this.props.content;
+    const { classes } = this.props;
 
     console.log(document.loading);
 
-    let markup = document.loading ? <p>Loading</p> :
-        (<>
-          <LiveProvider code={content}  contentEditable={true}>
-            <LiveEditor name="content" onChange={this.updateContent} />
-          </LiveProvider>
-          <Button type={"submit"}
-                  variant={"contained"}
-                  color={"primary"}
-                  className={classes.button}
-                  onClick={this.handleSave}>
-            Save
-          </Button>
-            </>);
     return (
-        <>
-        {markup}
-        </>
+        <div className={classes.textEditor}>
+          <div id={"firepad-container"} className={classes.firepadContainer}></div>
+        </div>
     )
   }
 }

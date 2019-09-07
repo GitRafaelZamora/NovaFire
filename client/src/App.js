@@ -16,6 +16,7 @@ import Error from './components/pages/Error'
 import Navbar from './components/organisms/Navbar'
 import Home from './components/pages/Home'
 import AuthRoute from "./util/AuthRoute";
+import Firepad from './components/pages/Firepad';
 
 // Redux
 import store from './redux/store'
@@ -61,6 +62,7 @@ function App() {
             <AuthRoute exact path="/dashboard" component={Dashboard} />
             <AuthRoute path="/editor" component={Editor} />
             <Route path={["", "/error"]} component={Error} />
+            <Route path={"/firepad"} component={Firepad} />
           </div>
         </Router>
       </Provider>

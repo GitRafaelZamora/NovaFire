@@ -10,15 +10,13 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 // import Home from '@material-ui/icons/Home';
 
-import withStyle from '@material-ui/styles';
-
 import { withStyles } from '@material-ui/core';
 
 const styles = theme => ({
   navContainer: {
     backgroundColor: '#282c34',
   }
-})
+});
 
 
 class Navbar extends Component {

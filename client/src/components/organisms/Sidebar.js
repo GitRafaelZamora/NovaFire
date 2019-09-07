@@ -9,10 +9,10 @@ export class Sidebar extends Component {
     return (
       <Grid container spacing={1} direction="column">
         <Grid item md={12}>
-          <Chatbox />
+          {/*<Chatbox />*/}
         </Grid>
         <Grid item md={12}>
-          <Chatbox />
+          {/*<Chatbox />*/}
         </Grid>
       </Grid>
     )
