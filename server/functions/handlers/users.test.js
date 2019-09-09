@@ -13,7 +13,7 @@ describe("User", () => {
             axios.post('http://localhost:5000/novafire-c701c/us-central1/api/user/login', user)
                 .then((res) => {
                     expect(res.data).toHaveProperty('token');
-                    done();
+                    return done();
                 })
                 .catch(err => {
                     console.log(err);
@@ -26,13 +26,14 @@ describe("User", () => {
             };
 
             axios.post('http://localhost:5000/novafire-c701c/us-central1/api/user/login', user)
+            // eslint-disable-next-line promise/always-return
                 .then((res) => {
                     // Should jump straight to error
                 })
                 .catch(err => {
                     expect(err.response.status).toEqual(403);
                     expect(err.response.data).toHaveProperty('general');
-                    done();
+                    return done();
                 });
         });
         test('Wrong Password Credentials', (done) => {
@@ -42,6 +43,7 @@ describe("User", () => {
             };
 
             axios.post('http://localhost:5000/novafire-c701c/us-central1/api/user/login', user)
+            // eslint-disable-next-line promise/always-return
                 .then((res) => {
                     // Should jump straight to error
                 })
@@ -58,6 +60,7 @@ describe("User", () => {
             };
 
             axios.post('http://localhost:5000/novafire-c701c/us-central1/api/user/login', user)
+            // eslint-disable-next-line promise/always-return
                 .then((res) => {
                     // Should jump straight to error
                 })
