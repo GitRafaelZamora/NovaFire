@@ -1,9 +1,9 @@
 module.exports = {
-    apiKey: "AIzaSyDAe_-LMFcWfyH2-mTuPXx2VkFbAvL9VJ4",
-    authDomain: "binate-363ac.firebaseapp.com",
-    databaseURL: "https://binate-363ac.firebaseio.com",
-    projectId: "binate-363ac",
-    storageBucket: "binate-363ac.appspot.com",
-    messagingSenderId: "782168087462",
-    appId: "1:782168087462:web:c332c32beed02c1e"
+    apiKey: "AIzaSyAUidrHJTmg0l3WayF7L2oCo8ggTg5rLdQ",
+    authDomain: "novafire-c701c.firebaseapp.com",
+    databaseURL: "https://novafire-c701c.firebaseio.com",
+    projectId: "novafire-c701c",
+    storageBucket: "novafire-c701c.appspot.com",
+    messagingSenderId: "831114375043",
+    appId: "1:831114375043:web:c7893f05f1d42bb17110b6"
 };

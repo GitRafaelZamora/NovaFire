@@ -22,7 +22,7 @@ yarn-error.log*
 .idea
 
 # firebase credentials
-server/serviceAccount.json
+server/functions/util/serviceAccount.json
 
 # node modules
 client/node_modules

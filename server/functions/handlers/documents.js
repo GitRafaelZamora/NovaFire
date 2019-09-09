@@ -11,9 +11,14 @@ exports.createDocument = (req, res) => {
     // Create a new document reference.
     let docRef = db.collection("documents").doc();
     let docID = docRef.id;
+    let result;
+    result = {
+        ...document,
+        docID: docID,
+    };
 
     // Add a new document in collection "documents"
-    docRef.set({...document, docID: docID})
+    docRef.set({ ...document, docID: docID})
         .then(() => {
             console.log("Document successfully written!");
             const collaborator = {
@@ -22,14 +27,15 @@ exports.createDocument = (req, res) => {
             };
             // add the creator to "collaborator" collection
             db.collection('collaborators').doc().set(collaborator)
-                .then((doc) => {
-                    res.status(200).json({ ...document, docID });
+                .then(() => {
                     console.log("Collaborator successfully written!");
+                    return res.status(200).json({ ...document, docID });
                 })
                 .catch(err => {
                     console.error("Error writing collaborator: ", err);
-                    res.status(500).json({ error: err.code });
-                })
+                    return res.status(500).json({ error: err.code });
+                });
+            return "documents Line 38"
         })
         .catch(err => {
             console.error("Error writing document: ", err);
@@ -67,10 +73,11 @@ exports.saveDocument = (req, res) => {
     let merge = docRef.set(document);
 
     merge.then(() => {
-            res.status(200).json({ msg: "Document saved."})
+            return res.status(200).json({ msg: "Document saved." });
         })
         .catch(err => {
-            res.status(500).json({ error: "Document could not be saved." });
+            console.log(err);
+            return res.status(500).json({ error: "Document could not be saved." });
         });
 };
 
@@ -87,6 +94,7 @@ exports.getDocumentsAssociatedWUserHandle = (req, res) => {
                 console.log("req.user.handle: " + req.user.handle);
                 return db.collection('collaborators').where('handle', '==', req.user.handle).get()
             }
+            return "Line 96 document";
         })
         .then(collaboratingIDs => {
             if (collaboratingIDs.empty) {
@@ -102,19 +110,22 @@ exports.getDocumentsAssociatedWUserHandle = (req, res) => {
                 });
                 console.log(apply);
                 Promise.all(apply)
+                // eslint-disable-next-line promise/always-return
                     .then(textDocument => {
-                        console.log("\t\ttextDocument");
+                        // console.log("\t\ttextDocument");
                         textDocument.forEach(document => {
                             documents.push({...document.data(), docID: document.id});
                         });
                     })
                     .then(() => {
-                    return res.status(200).json(documents);
+                        return res.status(200).json(documents);
                     })
                     .catch(err => {
                         console.log(err);
                         console.log("Promise Error");
-                    })
+                        return res.status(500).json({ error: "Error getting users documents" })
+                    });
+                return "line 125 document"
             }
         })
         .catch(err => {
@@ -131,11 +142,16 @@ exports.deleteDocument = (req, res) => {
         .then(() => {
             console.log("Document deleted");
             db.collection('collaborators').where('docID', '==', req.body.docID).get()
+                // eslint-disable-next-line promise/always-return
                 .then(collaboratingDocuments => {
                     collaboratingDocuments.forEach(relation => {
                         db.collection('collaborators').doc(relation.id).delete()
                             .then(() => {
-                                res.status(200).json({msg: "Successfully deleted document."})
+                                return res.status(200).json({msg: "Successfully deleted document."})
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                return res.status(500).json({ error: "Error deleting document" })
                             });
                     });
                 })
@@ -143,6 +159,7 @@ exports.deleteDocument = (req, res) => {
                     console.log(err);
                     console.log("Error deleting collaborator relations.");
                 });
+            return "Line 154 document";
         })
         .catch(err => {
             console.log(err);

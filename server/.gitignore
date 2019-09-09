@@ -65,4 +65,4 @@ node_modules/
 .env
 
 # firebase service account credentials
-./serviceAccount.json
+functions/util/serviceAccount.json

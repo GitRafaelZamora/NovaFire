@@ -75,9 +75,9 @@ exports.login = (req, res) => {
             return res.json({ token });
         })
         .catch(err => {
-            // if (err.code === 'auth/wrong-password') {
-            //     return res.status(403).json({ general: 'Wrong Credentials, please try again.' });
-            // }
+            if (err.code === 'auth/wrong-password') {
+                return res.status(403).json({ general: 'auth/wrong-password' });
+            }
             console.log(err);
             return res.status(403).json({ general: 'Wrong credentials, please try again' });
         });
@@ -92,6 +92,7 @@ exports.getAuthenticatedUser = (req, res) => {
                 userData.credentials = doc.data();
                 res.status(200).json(userData);
             }
+            return "Nothing";
         })
         .catch(err => {
             console.log(err);
