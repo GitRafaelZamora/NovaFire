@@ -3,9 +3,9 @@ import React, { Component } from 'react'
 // Material UI
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const styles = {
 
-}));
+};
 
 export class Home extends Component {
     constructor(props) {
@@ -26,4 +26,4 @@ export class Home extends Component {
     }
 }
 
-export default withStyles(useStyles)(Home);
+export default withStyles(styles)(Home);

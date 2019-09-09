@@ -35,10 +35,11 @@ class DocumentCard extends React.Component {
         super(props);
     }
 
-    openDocument = () => {
+    openDocument = (e) => {
+        e.preventDefault();
         console.log("Opening document: " + this.props.docID);
         this.props.getDocument(this.props.docID);
-        this.props.history.push('/editor');
+        setTimeout(()=>{this.props.history.push('/editor')}, 750);
     };
 
     render() {

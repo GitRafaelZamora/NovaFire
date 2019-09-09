@@ -15,7 +15,7 @@ export default function( state = initialState, action) {
         case SET_DOCUMENT:
             return {
                 ...state,
-                loading: false,
+                loading: true,
                 activeDocument: action.payload,
             };
         case SAVE_DOCUMENT:

@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
+
 // Material UI
 import { withStyles } from '@material-ui/core';
-
-// React Editor
-import { LiveProvider, LiveEditor } from 'react-live';
-// Redux
-import { setHistory, setClient } from '../../redux/actions/dataActions'
-import { saveDocument, setContent } from '../../redux/actions/documentActions'
-import { connect } from 'react-redux'
-import Proptypes from 'prop-types'
+import PropTypes from "prop-types";
+import {loginUser} from "../../redux/actions/userActions";
+import {getDocuments} from "../../redux/actions/documentActions";
+import {Dashboard} from "../pages/Dashboard";
 
 const styles = theme => ({
   firepadContainer: {
@@ -25,27 +23,15 @@ const styles = theme => ({
 class TextEditor extends Component {
   constructor(props) {
     super(props);
-
-    console.log(this.props);
-
-    this.state = {
-      user: this.props.user,
-      activeDocument: this.props.document.activeDocument
-    }
+    this.state = {}
   }
-
-  updateContent = (content) => {
-    this.props.setContent(content);
-  };
 
   componentDidMount() {
     // Get Firebase Database reference to the document.
     // var firepadRef = this.getTextDocumentRef(this.props.document.activeDocument.docID);
-    var firepadRef = this.getTextDocumentRef();
 
-    // monaco.editor.create(document.getElementById('firepad-container'), {
-    //   language: 'javascript'
-    // });
+    let firepadRef = this.getTextDocumentRef();
+    setTimeout(()=>{}, 10000);
 
     // Create CodeMirror
     var codeMirror = window.CodeMirror(document.getElementById('firepad-container'),
@@ -70,18 +56,16 @@ class TextEditor extends Component {
     });
   }
 
-  handleSave = (e) => {
-    this.props.saveDocument(this.props.document.activeDocument);
-  };
-
   getTextDocumentRef() {
     var ref = window.firebase.database().ref();
-    var hash = window.location.hash.replace(/#/g, '');
+    // Grab the Unique ID for the document.
+    var hash = this.props.document.activeDocument.docID;
+    console.log("HASH: " + hash);
+    console.log(ref);
     if (hash) {
       ref = ref.child(hash);
     } else {
       ref = ref.push();
-      console.log(window.location);
       window.location = window.location + '#' + ref.key;
     }
     if (typeof console !== 'undefined') {
@@ -91,9 +75,7 @@ class TextEditor extends Component {
   }
 
   render() {
-    const { document }  = this.props;
     const { classes } = this.props;
-
     console.log(document.loading);
 
     return (
@@ -105,22 +87,17 @@ class TextEditor extends Component {
 }
 
 TextEditor.propTypes = {
-  setHistory: Proptypes.func.isRequired,
-  setContent: Proptypes.func.isRequired,
-  document: Proptypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
+  document: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  content: state.document.activeDocument.content,
-  user: state.user,
   document: state.document,
 });
 
 const mapActionsToProps = {
-  setContent,
-  setHistory,
-  setClient,
-  saveDocument,
+  loginUser,
+  getDocuments,
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(TextEditor));

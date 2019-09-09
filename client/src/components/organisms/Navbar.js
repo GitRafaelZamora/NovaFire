@@ -26,7 +26,6 @@ class Navbar extends Component {
       <AppBar position="absolute">
         <Toolbar className={classes.navContainer}>
           <Button color="inherit" component={Link} to="/">Home</Button>
-          <Button color="inherit" component={Link} to="/editor">TextEditor</Button>
           <Button color="inherit" component={Link} to="/dashboard">Dashboard</Button>
         </Toolbar>
       </AppBar >
