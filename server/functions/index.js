@@ -10,7 +10,7 @@ app.use(cors());
 
 const { login, signup, getAuthenticatedUser } = require('./handlers/users');
 const { createDocument, getDocument, getDocumentsAssociatedWUserHandle, saveDocument, deleteDocument } = require('./handlers/documents');
-const { FBAuth} = require('./util/FBAuth');
+const { FBAuth } = require('./util/FBAuth');
 const { db } = require('./util/admin');
 
 

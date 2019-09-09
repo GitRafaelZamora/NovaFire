@@ -36,7 +36,7 @@ export const getDocuments = () => (dispatch) => {
             });
         })
         .catch((err) => {
-            console.log(`Error retrieving document.`);
+            console.log(`Error retrieving documents.`);
             console.log(err);
         });
 };

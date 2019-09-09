@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
-import Chatbox from '../molecules/chatbox'
+import Chatbox from '../molecules/Chatbox'
 
 export class Sidebar extends Component {
   render() {

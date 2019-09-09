@@ -85,7 +85,8 @@ exports.getDocumentsAssociatedWUserHandle = (req, res) => {
     let user = {};
     let documents = [];
     let textDocumentID = '';
-
+    console.log("GETTING USER: ")
+    console.log(req.user.handle);
     db.doc(`/users/${req.user.handle}`).get()
         .then(fireUser => {
             if (fireUser.exists) {
@@ -94,7 +95,6 @@ exports.getDocumentsAssociatedWUserHandle = (req, res) => {
                 console.log("req.user.handle: " + req.user.handle);
                 return db.collection('collaborators').where('handle', '==', req.user.handle).get()
             }
-            return "Line 96 document";
         })
         .then(collaboratingIDs => {
             if (collaboratingIDs.empty) {
@@ -102,6 +102,7 @@ exports.getDocumentsAssociatedWUserHandle = (req, res) => {
                 return res.status(404).json({ error: "User has no documents" });
             } else {
                 let apply = [];
+                console.log(collaboratingIDs);
                 collaboratingIDs.forEach(relation => {
                     console.log('\t' + relation.id, '=>', relation.data());
                     textDocumentID = relation.data().docID;
@@ -123,7 +124,7 @@ exports.getDocumentsAssociatedWUserHandle = (req, res) => {
                     .catch(err => {
                         console.log(err);
                         console.log("Promise Error");
-                        return res.status(500).json({ error: "Error getting users documents" })
+                        return res.status(500).json({ error: "Error getting users documents." })
                     });
                 return "line 125 document"
             }

@@ -10,7 +10,7 @@ import { StylesProvider, createGenerateClassName } from '@material-ui/styles'
 
 // Components
 import Editor from './components/templates/Editor'
-import Login from './components/atoms/Login'
+import Login from './components/pages/Login'
 import Dashboard from './components/pages/Dashboard'
 import Error from './components/pages/Error'
 import Navbar from './components/organisms/Navbar'
@@ -24,7 +24,7 @@ import { SET_AUTHENTICATED } from "./redux/types";
 import { getUserData, logoutUser } from "./redux/actions/userActions";
 
 
-axios.defaults.baseURL = 'https://us-central1-binate-363ac.cloudfunctions.net/api';
+axios.defaults.baseURL = 'https://us-central1-novafire-c701c.cloudfunctions.net/api';
 
 // Check for previous Auth Token
 const token = localStorage.FBIdToken;

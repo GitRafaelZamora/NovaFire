@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 // Components
 import SideBar from '../organisms/SideBar'
 import TextEditor from '../organisms/TextEditor'
-import EditorConsole from '../atoms/editor_console'
+import EditorConsole from '../molecules/EditorConsole'
 
 const styles = theme => ({
   root: {

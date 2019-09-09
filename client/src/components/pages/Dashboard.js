@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from "prop-types";
+
+// MUI
 import { withStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 
 // Components
-import DocumentCard from "../atoms/DocumentCard";
-import CreateDocumentCard from "../atoms/CreateDocumentCard"
-import PropTypes from "prop-types";
+import DocumentCard from "../molecules/DocumentCard";
+import CreateDocumentCard from "../molecules/CreateDocumentCard"
+
 import {loginUser} from "../../redux/actions/userActions";
 import {getDocuments} from "../../redux/actions/documentActions";
 

@@ -73,8 +73,6 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "proxy": "https://us-central1-binate-363ac.cloudfunctions.net/api",
-  "devDependencies": {
-    "webpack-dev-server": "^3.8.0"
-  }
+  "proxy": "https://us-central1-novafire-c701c.cloudfunctions.net/api",
+  "devDependencies": {}
 }
