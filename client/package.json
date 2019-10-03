@@ -30,6 +30,7 @@
     "clean-webpack-plugin": "^3.0.0",
     "create-react-app": "^3.0.1",
     "css-loader": "^3.1.0",
+    "fg-loadcss": "^2.1.0",
     "firebase": "^6.6.0",
     "firebase-admin": "^8.3.0",
     "firebase-tools": "^7.2.3",
@@ -74,5 +75,7 @@
     "extends": "react-app"
   },
   "proxy": "https://us-central1-novafire-c701c.cloudfunctions.net/api",
-  "devDependencies": {}
+  "devDependencies": {
+    "webpack-dev-server": "^3.8.0"
+  }
 }

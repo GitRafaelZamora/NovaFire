@@ -33,15 +33,16 @@ class Editor extends Component {
   render() {
     return (
         <Grid container>
-          <Grid item xs={8} sm={6} md={8}>
+          <Grid item xs={2} sm={2} md={2}>
+
+          </Grid>
+          <Grid item xs={8} sm={8} md={8}>
             <TextEditor />
           </Grid>
-          <Grid item xs={4} sm={6} md={4}>
-            <SideBar />
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <EditorConsole />
-          </Grid>
+        <Grid item xs={2} sm={2} md={2}>
+
+        </Grid>
+
         </Grid>
     )
   }

@@ -11,6 +11,7 @@ import { StylesProvider, createGenerateClassName } from '@material-ui/styles'
 // Components
 import Editor from './components/templates/Editor'
 import Login from './components/pages/Login'
+import Signup from './components/pages/Signup'
 import Dashboard from './components/pages/Dashboard'
 import Error from './components/pages/Error'
 import Navbar from './components/organisms/Navbar'
@@ -23,12 +24,10 @@ import { Provider } from 'react-redux'
 import { SET_AUTHENTICATED } from "./redux/types";
 import { getUserData, logoutUser } from "./redux/actions/userActions";
 
-
 axios.defaults.baseURL = 'https://us-central1-novafire-c701c.cloudfunctions.net/api';
 
 // Check for previous Auth Token
 const token = localStorage.FBIdToken;
-
 if (token) {
   const decodedToken = jwtDecode(token);
   console.log(decodedToken);
@@ -41,8 +40,6 @@ if (token) {
     axios.defaults.headers.common['Authorization'] = token;
     store.dispatch( getUserData() );
   }
-} else {
-  console.log("No Token")
 }
 
 const generateClassName = createGenerateClassName({
@@ -58,6 +55,7 @@ function App() {
           <div className="container">
             <Route exact path="/" component={Home}/>
             <Route exact path="/login" component={Login} />
+            <Route path="/signup" component={Signup} />
             <AuthRoute exact path="/dashboard" component={Dashboard} />
             <AuthRoute path="/editor" component={Editor} />
             <Route path={["", "/error"]} component={Error} />

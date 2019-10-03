@@ -3,7 +3,9 @@ import {
     SET_DOCUMENT,
     LOADING_DOCUMENT,
     SAVE_DOCUMENT,
-    CREATE_DOCUMENT, SET_CONTENT
+    CREATE_DOCUMENT,
+    SET_CONTENT,
+    DELETE_DOCUMENT
 } from "../types";
 import axios from 'axios';
 
@@ -20,6 +22,22 @@ export const getDocument = (docID) => (dispatch) => {
         })
         .catch((err) => {
             console.log(`Client Error retrieving document.`);
+            console.log(err);
+        });
+};
+
+export const deleteDocument = (docID) => (dispatch) => {
+    console.log("DELETING: " + docID);
+    dispatch({ type: LOADING_DOCUMENT });
+    axios.delete('/document', { data: { docID: docID } })
+        .then(res => {
+            dispatch({
+                type: DELETE_DOCUMENT,
+                payload: docID
+            })
+        })
+        .catch(err => {
+            console.log("Error deleting document");
             console.log(err);
         });
 };
@@ -76,3 +94,20 @@ export const setContent = (content) => (dispatch) => {
         payload: content
     });
 };
+
+export const addCollaborator = (handle, docID) => {
+    let collaborator = {
+        handle,
+        docID
+    };
+
+    axios.post('/document/addCollaborator', collaborator)
+        .then(res => {
+            console.log(res.data);
+
+        })
+        .catch(err => {
+            console.log(err.response.data);
+        });
+};
+

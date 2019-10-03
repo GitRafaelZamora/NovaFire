@@ -4,6 +4,8 @@ import React, { Component } from 'react'
 
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { logoutUser } from "../../redux/actions/userActions";
+
 // MUI Stuff
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -27,6 +29,8 @@ class Navbar extends Component {
         <Toolbar className={classes.navContainer}>
           <Button color="inherit" component={Link} to="/">Home</Button>
           <Button color="inherit" component={Link} to="/dashboard">Dashboard</Button>
+          <Button color="inherit" component={Link} to="/" onClick={this.props.logoutUser}>Logout</Button>
+          <Button color="inherit" component={Link} to="/login">Login</Button>
         </Toolbar>
       </AppBar >
     )
@@ -35,10 +39,14 @@ class Navbar extends Component {
 
 Navbar.propTypes = {
 
-}
+};
 
 const mapStateToProps = (state) => ({
-  
-})
 
-export default connect(mapStateToProps)(withStyles(styles)(Navbar));
+});
+
+const mapActionToProps = {
+  logoutUser
+};
+
+export default connect(mapStateToProps, mapActionToProps)(withStyles(styles)(Navbar));

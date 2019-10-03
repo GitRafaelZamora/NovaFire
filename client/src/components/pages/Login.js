@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 // Material UI
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
+import { Link } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
@@ -35,7 +35,7 @@ const styles = {
         color: '#fff'
     },
     button: {
-        marginTop: 20,
+        margin: "20px",
         position: 'relative'
     },
     customError: {
@@ -76,10 +76,6 @@ class Login extends Component {
 
     render() {
         const { classes } = this.props;
-
-        if (this.state.redirect) {
-            return <Redirect to={'/' + this.state.redirect}/>;
-        }
 
         return (
             <Grid container className={classes.form}>
@@ -124,8 +120,14 @@ class Login extends Component {
                             {/*<CircularProgress size={30} className={classes.progress} />*/}
                             {/*}*/}
                         </Button>
+                        <Button color="primary" component={Link} to={"/signup"}>
+                            Signup
+                            {/*{ loading &&*/}
+                            {/*<CircularProgress size={30} className={classes.progress} />*/}
+                            {/*}*/}
+                        </Button>
                         <br />
-                        <small>don't have an accound ? sign up <Link to="/signup">here</Link></small>
+                        <small>Don't have an account? Sign up <Link to="/signup">here.</Link></small>
                     </form>
                 </Grid>
                 <Grid item sm />

@@ -33,11 +33,8 @@ export class Dashboard extends Component {
         // TODO: ADD Collaborators.
         let documentMarkup = !loading ? (
             documents.map(document =>
-                <Grid key={document.docID} item xs={3}>
-                    <DocumentCard docID={document.docID}
-                                  title={document.title}
-                                  content={document.content}
-                    />
+                <Grid key={document.docID} item xs={12} sm={6} md={4} lg={3}>
+                    <DocumentCard document={document} />
                 </Grid>
             )
         ) : (
@@ -45,7 +42,7 @@ export class Dashboard extends Component {
         );
         return (
             <Grid container spacing={10}>
-                <Grid item xs={3}>
+                <Grid item xs={12} sm={6} md={4} lg={3}>
                     <CreateDocumentCard/>
                 </Grid>
                 {documentMarkup}

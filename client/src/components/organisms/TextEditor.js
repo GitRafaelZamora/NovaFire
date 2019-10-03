@@ -13,10 +13,8 @@ const styles = theme => ({
     backgroundColor: '#282c34',
     color: "white",
     height: "1000px",
-    margin: "auto"
   },
   textEditor: {
-
   }
 });
 
@@ -39,7 +37,8 @@ class TextEditor extends Component {
     );
     console.log(codeMirror);
 
-    // Create Firepad
+    // Firepad was attached to the window in public/index.html
+    // Creating firepad instance.
     var firepad = window.Firepad.fromCodeMirror(firepadRef, codeMirror, {
       richTextToolbar: false,
       richTextShortcuts: true

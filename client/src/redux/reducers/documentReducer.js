@@ -1,7 +1,11 @@
 import {
     SET_DOCUMENT,
     LOADING_DOCUMENT,
-    SET_DOCUMENTS, CREATE_DOCUMENT, SAVE_DOCUMENT, SET_CONTENT
+    SET_DOCUMENTS,
+    CREATE_DOCUMENT,
+    SAVE_DOCUMENT,
+    SET_CONTENT,
+    DELETE_DOCUMENT
 } from '../types';
 
 const initialState = {
@@ -46,6 +50,12 @@ export default function( state = initialState, action) {
             return {
                 ...state,
                 documents: [...state.documents, action.payload]
+            };
+        case DELETE_DOCUMENT:
+            return {
+                ...state,
+                loading: false,
+                documents: state.documents.filter(value => { return value.docID !== action.payload })
             };
         default:
             return state;
