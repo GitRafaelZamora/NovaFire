@@ -76,10 +76,10 @@ exports.login = (req, res) => {
         })
         .catch(err => {
             if (err.code === 'auth/wrong-password') {
-                return res.status(403).json({ general: 'auth/wrong-password' });
+                return res.status(403).json({ errors: 'auth/wrong-password' });
             }
             console.log(err);
-            return res.status(403).json({ general: 'Wrong credentials, please try again' });
+            return res.status(403).json({ errors: 'Wrong credentials, please try again' });
         });
 };
 // TODO: Write API Documentation in ../swagger.json
@@ -99,3 +99,21 @@ exports.getAuthenticatedUser = (req, res) => {
             return res.status(500).json({ error: err.code })
         })
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

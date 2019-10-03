@@ -1,5 +1,5 @@
 const firebase = require('firebase');
-const {admin, db} = require('../util/admin');
+const { admin, db } = require('../util/admin');
 
 exports.createDocument = (req, res) => {
     const document = {
@@ -41,6 +41,66 @@ exports.createDocument = (req, res) => {
             console.error("Error writing document: ", err);
             res.status(500).json({ error: err.code });
         });
+};
+
+exports.addCollaborator = (req, res) => {
+    let collaborator = {
+        docID: req.body.docID,
+        handle: req.body.handle
+    };
+    db.collection('collaborators').doc()
+        .set(collaborator)
+        .then(doc => {
+            return res.status(200).json({ msg: "Successfully added collaborator." });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: "Error adding Collaborator." })
+        });
+    // Get reference to document we are adding a collaborator to.
+    let docRef = db.collection('documents').doc(req.body.docID);
+    let collaborators;
+
+    docRef.get()
+        // eslint-disable-next-line promise/always-return
+        .then(doc => {
+            let document = doc.data();
+            console.log("document");
+            collaborators = document.collaborators;
+            collaborators.push(req.body.handle);
+        })
+        // eslint-disable-next-line promise/always-return
+        .then(() => {
+            docRef.set({collaborators: collaborators}, { merge: true })
+                .then(doc => {
+                    return res.status(200).json({ msg: "Successfully added collaborator." });
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.status(500).json({ error: "Error adding Collaborator." })
+                });
+        })
+        .catch(err => {
+            console.log("Error document");
+            console.log(err);
+            return res.status(500).json({ error: "Error getting document collaborators." })
+        });
+};
+
+getDocumentData = (docID) => {
+    let status, data;
+    db.collection('documents').doc(docID).get()
+        // eslint-disable-next-line promise/always-return
+        .then(doc => {
+            status = 200;
+            data = doc.data();
+        })
+        .catch(err => {
+            console.log(err);
+            status = 500;
+            data = { error: "Error getting document." };
+        });
+    return ;
 };
 
 exports.getDocument = (req, res) => {
@@ -89,6 +149,7 @@ exports.getDocumentsAssociatedWUserHandle = (req, res) => {
     console.log(req.user.handle);
     db.doc(`/users/${req.user.handle}`).get()
         .then(fireUser => {
+            // eslint-disable-next-line promise/always-return
             if (fireUser.exists) {
                 user.credentials = fireUser.data();
                 // TODO: Get Documents
@@ -167,3 +228,4 @@ exports.deleteDocument = (req, res) => {
             console.log("Error deleting document");
         });
 };
+
