@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { loadCSS } from 'fg-loadcss';
@@ -36,8 +35,22 @@ const styles = {
 
 class Collaborators extends Component {
 
+    validUser = (user) => {
+        let result = true;
+        if (user.length === 0) {
+            result = false;
+        }
+
+        return result;
+    };
+
     inviteFriend = ( ) => {
-        this.props.addCollaborator(this.props.handle, this.props.docID);
+        if (this.validUser(this.props.handle)) {
+            this.props.addCollaborator(this.props.handle, this.props.docID);
+        } else {
+            console.log("User must not be empty.")
+        }
+
     };
 
     render() {

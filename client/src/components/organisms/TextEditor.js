@@ -6,7 +6,6 @@ import { withStyles } from '@material-ui/core';
 import PropTypes from "prop-types";
 import {loginUser} from "../../redux/actions/userActions";
 import {getDocuments} from "../../redux/actions/documentActions";
-import {Dashboard} from "../pages/Dashboard";
 
 const styles = theme => ({
   firepadContainer: {

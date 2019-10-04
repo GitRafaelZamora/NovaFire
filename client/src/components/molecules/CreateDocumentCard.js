@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createDocument } from '../../redux/actions/documentActions';
@@ -7,11 +6,9 @@ import { createDocument } from '../../redux/actions/documentActions';
 // Material UI
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import AddBox from '@material-ui/icons/AddBox';
 import TextField from "@material-ui/core/TextField";
 
 const styles = {

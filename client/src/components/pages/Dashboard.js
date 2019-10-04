@@ -29,8 +29,7 @@ export class Dashboard extends Component {
 
     render() {
         const { documents, loading } = this.props.document;
-        const classes = this.props.classes;
-        // TODO: ADD Collaborators.
+
         let documentMarkup = !loading ? (
             documents.map(document =>
                 <Grid key={document.docID} item xs={12} sm={6} md={4} lg={3}>

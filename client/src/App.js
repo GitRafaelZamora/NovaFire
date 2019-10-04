@@ -1,9 +1,8 @@
 import React from 'react';
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
+import { Route, BrowserRouter as Router } from 'react-router-dom'
 import './App.css';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
-import { loadState, saveState } from "./util/localStorage";
 
 // Material UI
 import { StylesProvider, createGenerateClassName } from '@material-ui/styles'

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -101,6 +100,7 @@ class DocumentCard extends React.Component {
 }
 
 DocumentCard.propTypes = {
+    documents: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
