@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from "prop-types";
-import ReactLoading from "react-loading";
+import FadeIn from "react-fade-in"
+import Lottie from 'react-lottie'
+import * as bb8 from '../../assets/bb8';
 
 // MUI
 import { withStyles } from '@material-ui/core/styles';
@@ -19,6 +21,15 @@ import {getDocuments} from "../../redux/actions/documentActions";
 const styles = {
     loading: {
         marginTop: 60
+    }
+};
+
+const options = {
+    loop: true,
+    autoplay: true,
+    animationData: bb8.default,
+    rendererSettings: {
+        preserveAspectRatio: "xMidYMid slice"
     }
 };
 
@@ -43,7 +54,12 @@ export class Dashboard extends Component {
                 </Grid>
             )
         ) : (
-            <ReactLoading className={classes.loading} type={"bars"} color={"white"} />
+            <FadeIn>
+                <div className={classes.loading}>
+                    <h1>fetching documents</h1>
+                    <Lottie options={options} height={120} width={120} />
+                </div>
+            </FadeIn>
         );
         return (
             <Grid container spacing={10}>
