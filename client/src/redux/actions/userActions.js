@@ -4,19 +4,20 @@ import {
     SET_ERRORS,
     LOADING_USER,
     LOADING_UI,
-    SET_UNAUTHENTICATED
+    SET_UNAUTHENTICATED, FETCHING_USER, FETCHING_COMPLETE
 } from '../types';
 import axios from 'axios';
 import { useHistory } from 'react-router'
 
 export const loginUser = (user, history) => (dispatch) => {
-    dispatch({ type: LOADING_UI });
+    dispatch({ type: FETCHING_USER });
 
     axios.post('/user/login', user)
         .then((res) => {
             setAuthorizationHeader(res.data.token);
-            dispatch( getUserData() );
+            dispatch( getUserData(history) );
             dispatch({ type: CLEAR_ERRORS });
+            dispatch({ type: FETCHING_COMPLETE });
             // Redirect
             history.push("/dashboard");
         })
@@ -46,14 +47,16 @@ export const signup = (user) => (dispatch) => {
         });
 };
 
-export const getUserData = () => (dispatch) => {
+export const getUserData = (history) => (dispatch) => {
     dispatch({ type: LOADING_USER });
+
     axios.get('/user')
         .then((res) => {
             dispatch({
                 type: SET_USER,
                 payload: res.data
             });
+            history.push('/dashboard');
         })
         .catch(err => {
             console.log("Error setting user.");

@@ -13,6 +13,9 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 import { loginUser } from "../../redux/actions/userActions";
 import { useHistory } from "react-router";
+import Lottie from "react-lottie";
+import FadeIn from "react-fade-in";
+import * as bb8 from '../../assets/bb8';
 
 const styles = {
     form: {
@@ -34,6 +37,18 @@ const styles = {
         fontSize: '0.8rem',
         marginTop: '10px'
     },
+    loading: {
+        marginTop: 60
+    }
+};
+
+const options = {
+    loop: true,
+    autoplay: true,
+    animationData: bb8.default,
+    rendererSettings: {
+        preserveAspectRatio: "xMidYMid slice"
+    }
 };
 
 class Login extends Component {
@@ -63,8 +78,21 @@ class Login extends Component {
     };
 
     render() {
-        const { classes } = this.props;
-        return (
+        const { classes, UI } = this.props;
+        let markup = UI.fetching_user ? (
+            <Grid container >
+                <Grid item sm />
+                <Grid item sm className={classes.form}>
+                    <FadeIn>
+                        <div className={classes.loading}>
+                            <h1>fetching user</h1>
+                            <Lottie options={options} height={120} width={120} />
+                        </div>
+                    </FadeIn>
+                </Grid>
+                <Grid item sm />
+            </Grid>
+        ) : (
             <Grid container >
                 <Grid item sm />
                 <Grid item sm className={classes.form}>
@@ -106,7 +134,7 @@ class Login extends Component {
                             variant="contained"
                             color="primary"
                             className={classes.button}
-                            >
+                        >
                             Login
                             {/*{ loading &&*/}
                             {/*<CircularProgress size={30} className={classes.progress} />*/}
@@ -124,6 +152,11 @@ class Login extends Component {
                 </Grid>
                 <Grid item sm />
             </Grid>
+        );
+        return (
+            <>
+                {markup}
+            </>
         );
     }
 }

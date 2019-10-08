@@ -2,11 +2,12 @@ import {
     SET_ERRORS,
     CLEAR_ERRORS,
     LOADING_UI,
-    STOP_LOADING_UI, FETCHING_DOCUMENTS, FETCHING_COMPLETE
+    STOP_LOADING_UI, FETCHING_DOCUMENTS, FETCHING_COMPLETE, FETCHING_USER
 } from '../types';
 
 const initialState = {
     fetching_documents: undefined,
+    fetching_user: undefined,
     ui_errors: undefined,
     // Deprecate old naming convention
     loading: false, // old
@@ -23,7 +24,13 @@ export default function(state = initialState, action) {
         case FETCHING_COMPLETE:
             return {
                 ...state,
-                fetching_documents: false
+                fetching_documents: false,
+                fetching_user: false,
+            };
+        case FETCHING_USER:
+            return {
+                ...state,
+                fetching_user: true,
             };
         case SET_ERRORS:
             return {
@@ -35,7 +42,7 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                errors: null
+                errors: undefined
             };
         case LOADING_UI:
             return {
