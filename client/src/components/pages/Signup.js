@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom'
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
@@ -9,9 +10,20 @@ import { signup } from '../../redux/actions/userActions'
 
 
 const styles = {
-    form: {},
-    pageTitle: {},
-    input: {},
+    form: {
+        textAlign: 'center',
+        padding: '50px',
+        backgroundColor: '#d3d3d3',
+        color: 'black'
+    },
+    pageTitle: {
+        margin: '10px auto 10px auto',
+        fontSize: 50,
+    },
+    button: {
+        margin: "20px",
+        position: 'relative'
+    },
 
 };
 
@@ -32,6 +44,7 @@ class Signup extends Component {
         });
     };
     handleSubmit = (e) => {
+        // TODO: Validate User Input
         e.preventDefault();
         console.log("Signup.js");
         console.log(this.state);
@@ -40,9 +53,9 @@ class Signup extends Component {
     render() {
         const { classes } = this.props;
         return (
-            <Grid container className={classes.form}>
+            <Grid container >
                 <Grid item sm />
-                <Grid item sm>
+                <Grid item sm className={classes.form}>
                     <Typography variant="h3" className={classes.pageTitle}>
                         Signup
                     </Typography>
@@ -112,7 +125,7 @@ class Signup extends Component {
                         {/*        {errors.general}*/}
                         {/*    </Typography>*/}
                         {/*)}*/}
-                        <Button type={"submit"} color={"primary"}>
+                        <Button type={"submit"} color={"primary"} component={Link} to={"/login"}>
                             Submit
                             {/*{ loading &&*/}
                             {/*<CircularProgress size={30} className={classes.progress} />*/}

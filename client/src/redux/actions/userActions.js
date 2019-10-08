@@ -7,6 +7,7 @@ import {
     SET_UNAUTHENTICATED
 } from '../types';
 import axios from 'axios';
+import { useHistory } from 'react-router'
 
 export const loginUser = (user, history) => (dispatch) => {
     dispatch({ type: LOADING_UI });
@@ -16,7 +17,8 @@ export const loginUser = (user, history) => (dispatch) => {
             setAuthorizationHeader(res.data.token);
             dispatch( getUserData() );
             dispatch({ type: CLEAR_ERRORS });
-            history.push('/dashboard');
+            // Redirect
+            history.push("/dashboard");
         })
         .catch(err => {
             dispatch({
@@ -26,8 +28,6 @@ export const loginUser = (user, history) => (dispatch) => {
         });
 };
 
-// TODO: Write SignUp functionality
-// NOTE: Backend is ready at route: /user/signup
 export const signup = (user) => (dispatch) => {
     console.log("Signing in");
     console.log(user);
@@ -50,7 +50,6 @@ export const getUserData = () => (dispatch) => {
     dispatch({ type: LOADING_USER });
     axios.get('/user')
         .then((res) => {
-            // console.log("Data: " + res.data);
             dispatch({
                 type: SET_USER,
                 payload: res.data

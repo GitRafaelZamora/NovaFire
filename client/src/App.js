@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, BrowserRouter as Router } from 'react-router-dom'
+
 import './App.css';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
@@ -12,7 +13,6 @@ import Editor from './components/templates/Editor'
 import Login from './components/pages/Login'
 import Signup from './components/pages/Signup'
 import Dashboard from './components/pages/Dashboard'
-import Error from './components/pages/Error'
 import Navbar from './components/organisms/Navbar'
 import Home from './components/pages/Home'
 import AuthRoute from "./util/AuthRoute";
@@ -29,7 +29,6 @@ axios.defaults.baseURL = 'https://us-central1-novafire-c701c.cloudfunctions.net/
 const token = localStorage.FBIdToken;
 if (token) {
   const decodedToken = jwtDecode(token);
-  console.log(decodedToken);
   // Check Token Expiration.
   if (decodedToken.exp * 1000 < Date.now()) {
     store.dispatch( logoutUser() );
@@ -57,7 +56,6 @@ function App() {
             <Route path="/signup" component={Signup} />
             <AuthRoute exact path="/dashboard" component={Dashboard} />
             <AuthRoute path="/editor" component={Editor} />
-            <Route path={["", "/error"]} component={Error} />
           </div>
         </Router>
       </Provider>

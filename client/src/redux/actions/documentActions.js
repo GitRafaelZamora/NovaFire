@@ -5,7 +5,7 @@ import {
     SAVE_DOCUMENT,
     CREATE_DOCUMENT,
     SET_CONTENT,
-    DELETE_DOCUMENT
+    DELETE_DOCUMENT, FETCHING_DOCUMENTS, FETCHING_COMPLETE
 } from "../types";
 import axios from 'axios';
 
@@ -44,7 +44,7 @@ export const deleteDocument = (docID) => (dispatch) => {
 
 export const getDocuments = () => (dispatch) => {
     // Set UI state to loading document.
-    dispatch({ type: LOADING_DOCUMENT });
+    dispatch({ type: FETCHING_DOCUMENTS });
     axios.get('/documents')
         .then((res) => {
             console.log(res.data);
@@ -52,6 +52,7 @@ export const getDocuments = () => (dispatch) => {
                 type: SET_DOCUMENTS,
                 payload: res.data
             });
+            dispatch({ type: FETCHING_COMPLETE })
         })
         .catch((err) => {
             console.log(`Error retrieving documents.`);

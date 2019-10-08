@@ -1,15 +1,16 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk'
 
-import userReducer from './reducers/userReducer'
-import dataReducer from './reducers/dataReducer'
+import userReducer from './reducers/userReducer';
 import documentReducer from "./reducers/documentReducer";
+import uiReducer from "./reducers/uiReducer";
 import {loadState, saveState} from "../util/localStorage";
+
 
 const middleware = [thunk];
 
 const reducers = combineReducers({
-    data: dataReducer,
+    UI: uiReducer,
     user: userReducer,
     document: documentReducer
 });
@@ -22,7 +23,7 @@ const store = createStore(
     compose(
         applyMiddleware(...middleware),
         // Remove before build process.
-        // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
     )
 );
 

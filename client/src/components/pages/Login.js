@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom'
 
 // Material UI
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { Link } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
@@ -12,26 +12,18 @@ import { withStyles } from '@material-ui/core/styles';
 // Redux
 import { connect } from 'react-redux'
 import { loginUser } from "../../redux/actions/userActions";
+import { useHistory } from "react-router";
 
 const styles = {
     form: {
         textAlign: 'center',
-        paddingTop: '50px'
-    },
-    input: {
-        color: 'white'
-    },
-    image: {
-        margin: '20px auto 20px auto',
-        maxWidth: 100,
+        padding: '50px',
+        backgroundColor: '#d3d3d3',
+        color: 'black'
     },
     pageTitle: {
         margin: '10px auto 10px auto',
         fontSize: 50,
-    },
-    textField: {
-        margin: '10px auto 10px auto',
-        color: '#fff'
     },
     button: {
         margin: "20px",
@@ -42,9 +34,6 @@ const styles = {
         fontSize: '0.8rem',
         marginTop: '10px'
     },
-    progress: {
-        position: 'absolute'
-    }
 };
 
 class Login extends Component {
@@ -75,11 +64,10 @@ class Login extends Component {
 
     render() {
         const { classes } = this.props;
-
         return (
-            <Grid container className={classes.form}>
+            <Grid container >
                 <Grid item sm />
-                <Grid item sm>
+                <Grid item sm className={classes.form}>
                     <Typography variant="h1" className={classes.pageTitle}>
                         Login
                     </Typography>
@@ -113,7 +101,12 @@ class Login extends Component {
                         {/*        {errors.general}*/}
                         {/*    </Typography>*/}
                         {/*)}*/}
-                        <Button type="submit" variant="contained" color="primary" className={classes.button} >
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            className={classes.button}
+                            >
                             Login
                             {/*{ loading &&*/}
                             {/*<CircularProgress size={30} className={classes.progress} />*/}
@@ -136,14 +129,14 @@ class Login extends Component {
 }
 
 Login.propTypes = {
+    user: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     loginUser: PropTypes.func.isRequired,
-    user: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-    user: state.user,
     UI: state.UI,
+    user: state.user,
 });
 
 const mapActionsToProps = {
