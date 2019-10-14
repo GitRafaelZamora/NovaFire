@@ -5,7 +5,8 @@ import {
     SAVE_DOCUMENT,
     CREATE_DOCUMENT,
     SET_CONTENT,
-    DELETE_DOCUMENT, FETCHING_DOCUMENTS, FETCHING_COMPLETE
+    DELETE_DOCUMENT, FETCHING_DOCUMENTS, FETCHING_COMPLETE,
+    SET_COLLABORATOR
 } from "../types";
 import axios from 'axios';
 
@@ -96,7 +97,9 @@ export const setContent = (content) => (dispatch) => {
     });
 };
 
-export const addCollaborator = (handle, docID) => {
+export const addCollaborator = (handle, docID) => (dispatch) => {
+    dispatch({ type: SET_COLLABORATOR });
+
     let collaborator = {
         handle,
         docID

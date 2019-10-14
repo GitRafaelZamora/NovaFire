@@ -29,7 +29,7 @@ export const loginUser = (user, history) => (dispatch) => {
         });
 };
 
-export const signup = (user) => (dispatch) => {
+export const signup = (user, history) => (dispatch) => {
     console.log("Signing in");
     console.log(user);
     axios.post('/user/signup', user)
@@ -37,6 +37,8 @@ export const signup = (user) => (dispatch) => {
             console.log(res);
             setAuthorizationHeader(res.data.token);
             dispatch( getUserData() );
+            // Redirect on successful signup
+            history.push("/dashboard");
         })
         .catch((err) => {
             console.log(err);

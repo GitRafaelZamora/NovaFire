@@ -68,6 +68,7 @@ class Login extends Component {
     };
 
     handleSubmit = (e) => {
+        // TODO: Validate User Input
         e.preventDefault();
         const user = {
             email: this.state.email,

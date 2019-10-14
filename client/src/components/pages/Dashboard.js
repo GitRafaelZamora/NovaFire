@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import FadeIn from "react-fade-in"
 import Lottie from 'react-lottie'
 import * as bb8 from '../../assets/bb8';
+import Loading from "react-loading";
 
 // MUI
 import { withStyles } from '@material-ui/core/styles';
@@ -54,12 +55,7 @@ export class Dashboard extends Component {
                 </Grid>
             )
         ) : (
-            <FadeIn>
-                <div className={classes.loading}>
-                    <h1>fetching documents</h1>
-                    <Lottie options={options} height={120} width={120} />
-                </div>
-            </FadeIn>
+            <Loading className={classes.loading} />
         );
         return (
             <Grid container spacing={10}>

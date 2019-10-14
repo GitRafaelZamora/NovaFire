@@ -2,6 +2,7 @@
 export const SAVE_DOCUMENT = 'SAVE_DOCUMENT';
 export const SET_DOCUMENT = 'SET_DOCUMENT';
 export const LOADING_DOCUMENT = 'LOADING_DOCUMENT';
+export const SET_COLLABORATOR = 'SET_COLLABORATOR';
 
 // User Action Types
 export const SET_USER = 'SET_USER';
@@ -28,3 +29,4 @@ export const STOP_LOADING_UI = 'STOP_LOADING_UI';
 export const SET_DOCUMENTS = 'SET_DOCUMENTS';
 export const CREATE_DOCUMENT = 'CREATE_DOCUMENT';
 export const DELETE_DOCUMENT = 'DELETE_DOCUMENT';
+

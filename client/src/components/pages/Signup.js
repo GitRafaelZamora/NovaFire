@@ -48,7 +48,7 @@ class Signup extends Component {
         e.preventDefault();
         console.log("Signup.js");
         console.log(this.state);
-        this.props.signup(this.state);
+        this.props.signup(this.state, this.props.history);
     };
     render() {
         const { classes } = this.props;
@@ -125,7 +125,7 @@ class Signup extends Component {
                         {/*        {errors.general}*/}
                         {/*    </Typography>*/}
                         {/*)}*/}
-                        <Button type={"submit"} color={"primary"} component={Link} to={"/login"}>
+                        <Button type={"submit"} color={"primary"}>
                             Submit
                             {/*{ loading &&*/}
                             {/*<CircularProgress size={30} className={classes.progress} />*/}

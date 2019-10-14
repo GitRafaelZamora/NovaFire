@@ -50,7 +50,6 @@ class Collaborators extends Component {
         } else {
             console.log("User must not be empty.")
         }
-
     };
 
     render() {
